@@ -1,4 +1,4 @@
-[
+const companies = [
   {
     "name": "Barska",
     "url": "http://www.barska.com/",
@@ -443,4 +443,6 @@
     "country": "United States",
     "_id": 14609
   }
-]
+];
+
+module.exports = { companies };
