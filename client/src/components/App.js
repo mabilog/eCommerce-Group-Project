@@ -1,17 +1,17 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import Header from './Header';
-import Home from './Home';
-import Cart from './Cart';
-import ItemDetails from './ItemDetails';
+import Header from "./Header";
+import Home from "./Home";
+import Cart from "./Cart";
+import ItemDetails from "./ItemDetails";
 
 function App() {
-
-  return <div>
-    <BrowserRouter>
-    <Header/>
-    <Switch>
+  return (
+    <div>
+      <BrowserRouter>
+        <Header />
+        <Switch>
           <Route exact path="/">
             <Home />
           </Route>
@@ -19,11 +19,12 @@ function App() {
             <ItemDetails />
           </Route>
           <Route path="/cart/:orderid">
-            <Cart/>
+            <Cart />
           </Route>
         </Switch>
-    </BrowserRouter>
-    </div>;
+      </BrowserRouter>
+    </div>
+  );
 }
 
 export default App;
