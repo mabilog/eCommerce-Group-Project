@@ -5,6 +5,17 @@ const morgan = require('morgan');
 
 const PORT = 4000;
 
+const {
+  getCompanies,
+  getCompany,
+  getItems,
+  getItem,
+
+  addItem,
+  updateItem,
+  deleteItem,
+} = require("./handlers");
+
 express()
   .use(function(req, res, next) {
     res.header(
@@ -25,5 +36,14 @@ express()
 
   // REST endpoints?
   .get('/bacon', (req, res) => res.status(200).json('🥓'))
+
+  .get("/api/get-companies", getCompanies)
+  .get("/api/get-companies/:name", getCompany)
+  .get("/api/get-items", getItems)
+  .get("/api/get-items/:_id", getItem)
+
+  .post("/api/add-item", addItem)
+  .patch("/api/update-item", updateItem)
+  .delete("/api/delete-reservation", deleteItem)
 
   .listen(PORT, () => console.info(`Listening on port ${PORT}`));

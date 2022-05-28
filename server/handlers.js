@@ -10,7 +10,7 @@ const options = {
 };
 
 // use this package to generate unique ids: https://www.npmjs.com/package/uuid
-//const { v4: uuidv4 } = require("uuid");
+// const { v4: uuidv4 } = require("uuid");
 
 const sendMessage = (res, status, data, message = "") => {
   return res
@@ -120,7 +120,7 @@ const addItem = async (req, res) => {
     console.log(err.stack);
   }
 };
-s;
+
 const updateItem = async (req, res) => {
   try {
     const {
