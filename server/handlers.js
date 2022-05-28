@@ -78,9 +78,11 @@ const getItems = async (req, res) => {
 
 // get single item by id
 const getItem = async (req, res) => {
+  let { id } = req.params;
+  console.log(req.params);
+  console.log(id);
   try {
-    const thisItem = req.params;
-    console.log(thisItem);
+    // console.log(thisItemId);
     const client = new MongoClient(MONGO_URI, options);
     await client.connect();
     const db = client.db(DATABASE_NAME);
@@ -120,7 +122,11 @@ const addItem = async (req, res) => {
     console.log(err.stack);
   }
 };
+<<<<<<< Updated upstream
 
+=======
+s;
+>>>>>>> Stashed changes
 const updateItem = async (req, res) => {
   try {
     const {
