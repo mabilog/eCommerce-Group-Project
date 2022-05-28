@@ -5,17 +5,17 @@ import { Link } from "react-router-dom";
 
 const ItemCard = () => {
   return (
-      <>
-    <Link to={`/items/${item.id}`}>
-      <img src=""/>
-      <p>Item Name</p>
-      <p>Item Category</p>
-      <p>Item Price</p>
-      <button>Add to Cart</button>
-    </Link>
+    <>
+      {/* <Link to={`/items/${item.id}`}> */}
+      <Link to={`/`}>
+        {/* <img src=""/> */}
+        <p>Item Name</p>
+        <p>Item Category</p>
+        <p>Item Price</p>
+        <button>Add to Cart</button>
+      </Link>
     </>
   );
 };
-
 
 export default ItemCard;
