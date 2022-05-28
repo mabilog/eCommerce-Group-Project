@@ -122,15 +122,7 @@ const addItem = async (req, res) => {
     console.log(err.stack);
   }
 };
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
 
-=======
-s;
->>>>>>> Stashed changes
-=======
-s;
->>>>>>> Stashed changes
 const updateItem = async (req, res) => {
   try {
     const {
