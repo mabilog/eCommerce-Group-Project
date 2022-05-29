@@ -1,7 +1,7 @@
-'use strict';
+"use strict";
 
-const express = require('express');
-const morgan = require('morgan');
+const express = require("express");
+const morgan = require("morgan");
 
 const PORT = 4000;
 
@@ -17,30 +17,30 @@ const {
 } = require("./handlers");
 
 express()
-  .use(function(req, res, next) {
+  .use(function (req, res, next) {
     res.header(
-      'Access-Control-Allow-Methods',
-      'OPTIONS, HEAD, GET, PUT, POST, DELETE'
+      "Access-Control-Allow-Methods",
+      "OPTIONS, HEAD, GET, PUT, POST, DELETE"
     );
     res.header(
-      'Access-Control-Allow-Headers',
-      'Origin, X-Requested-With, Content-Type, Accept'
+      "Access-Control-Allow-Headers",
+      "Origin, X-Requested-With, Content-Type, Accept"
     );
     next();
   })
-  .use(morgan('tiny'))
-  .use(express.static('./server/assets'))
+  .use(morgan("tiny"))
+  .use(express.static("./server/assets"))
   .use(express.json())
   .use(express.urlencoded({ extended: false }))
-  .use('/', express.static(__dirname + '/'))
+  .use("/", express.static(__dirname + "/"))
 
   // REST endpoints?
-  .get('/bacon', (req, res) => res.status(200).json('🥓'))
+  .get("/bacon", (req, res) => res.status(200).json("🥓"))
 
   .get("/api/get-companies", getCompanies)
   .get("/api/get-companies/:name", getCompany)
   .get("/api/get-items", getItems)
-  .get("/api/get-items/:_id", getItem)
+  .get("/api/get-items/:id", getItem)
 
   .post("/api/add-item", addItem)
   .patch("/api/update-item", updateItem)
