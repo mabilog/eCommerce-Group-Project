@@ -9,7 +9,7 @@ import ItemDetails from "./ItemDetails";
 
 function App() {
   return (
-    <div>
+    <AppWrapper>
       <GlobalStyles />
       <BrowserRouter>
         <Header />
@@ -27,9 +27,14 @@ function App() {
           </Switch>
         </ComponentWrapper>
       </BrowserRouter>
-    </div>
+    </AppWrapper>
   );
 }
+
+const AppWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+`;
 
 const ComponentWrapper = styled.div`
   display: flex;
