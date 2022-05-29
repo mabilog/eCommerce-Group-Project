@@ -39,13 +39,23 @@ const getCompanies = async (req, res) => {
 // get single conpany by name
 const getCompany = async (req, res) => {
   try {
+<<<<<<< Updated upstream
+    const thisCompany = req.params.companyId;
+=======
     const thisCompany = req.params;
+>>>>>>> Stashed changes
     console.log(thisCompany);
     const client = new MongoClient(MONGO_URI, options);
     await client.connect();
     console.log("connected!");
     const db = client.db(DATABASE_NAME);
+<<<<<<< Updated upstream
+    const result = await db
+      .collection("companies")
+      .findOne({ _id: thisCompany });
+=======
     const result = await db.collection("companies").findOne(thisCompany);
+>>>>>>> Stashed changes
     console.log(result);
     result
       ? sendMessage(res, 200, result, "Found company success!")
@@ -122,7 +132,6 @@ const addItem = async (req, res) => {
     console.log(err.stack);
   }
 };
-
 const updateItem = async (req, res) => {
   try {
     const {
