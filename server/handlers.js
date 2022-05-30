@@ -39,23 +39,13 @@ const getCompanies = async (req, res) => {
 // get single conpany by name
 const getCompany = async (req, res) => {
   try {
-<<<<<<< Updated upstream
-    const thisCompany = req.params.companyId;
-=======
     const thisCompany = req.params;
->>>>>>> Stashed changes
     console.log(thisCompany);
     const client = new MongoClient(MONGO_URI, options);
     await client.connect();
     console.log("connected!");
     const db = client.db(DATABASE_NAME);
-<<<<<<< Updated upstream
-    const result = await db
-      .collection("companies")
-      .findOne({ _id: thisCompany });
-=======
     const result = await db.collection("companies").findOne(thisCompany);
->>>>>>> Stashed changes
     console.log(result);
     result
       ? sendMessage(res, 200, result, "Found company success!")
@@ -86,18 +76,19 @@ const getItems = async (req, res) => {
   }
 };
 
-// get single item by id
+// get single item by id, _id is string from frentend
 const getItem = async (req, res) => {
-  let { id } = req.params;
-  console.log(req.params);
-  console.log(id);
+  let idString = req.params._id;
+
+  let idNumber = parseInt(idString);
+
   try {
     // console.log(thisItemId);
     const client = new MongoClient(MONGO_URI, options);
     await client.connect();
     const db = client.db(DATABASE_NAME);
 
-    const result = await db.collection("items").findOne(thisItem);
+    const result = await db.collection("items").findOne({_id: idNumber});
     console.log(result);
     result
       ? res
@@ -133,83 +124,83 @@ const addItem = async (req, res) => {
   }
 };
 const updateItem = async (req, res) => {
-  try {
-    const {
-      _id,
-      name,
-      price,
-      body_location,
-      category,
-      imageSrc,
-      numInStock,
-      companyId,
-    } = req.body;
+  // try {
+  //   const {
+  //     _id,
+  //     name,
+  //     price,
+  //     body_location,
+  //     category,
+  //     imageSrc,
+  //     numInStock,
+  //     companyId,
+  //   } = req.body;
 
-    const client = new MongoClient(MONGO_URI, options);
-    await client.connect();
-    console.log("connected!");
-    const db = client.db(DATABASE_NAME);
+  //   const client = new MongoClient(MONGO_URI, options);
+  //   await client.connect();
+  //   console.log("connected!");
+  //   const db = client.db(DATABASE_NAME);
 
-    const itemCancel = await db
-      .collection("items")
-      .updateOne({ _id: _id }, { $set: { "seats.$.isAvailable": true } });
+  //   const itemCancel = await db
+  //     .collection("items")
+  //     .updateOne({ _id: _id }, { $set: { "seats.$.isAvailable": true } });
 
-    const seatBook = await db
-      .collection("items")
-      .updateOne(
-        { flight: flight, "seats.id": newSeat },
-        { $set: { numInStock: numInStock + 1 } }
-      );
+  //   const seatBook = await db
+  //     .collection("items")
+  //     .updateOne(
+  //       { flight: flight, "seats.id": newSeat },
+  //       { $set: { numInStock: numInStock + 1 } }
+  //     );
 
-    const reservationUpdate = await db
-      .collection("items")
-      .updateOne(
-        { id },
-        { $set: { seat: newSeat, givenName, surname, email } }
-      );
+  //   const reservationUpdate = await db
+  //     .collection("items")
+  //     .updateOne(
+  //       { id },
+  //       { $set: { seat: newSeat, givenName, surname, email } }
+  //     );
 
-    if (
-      itemCancel.modifiedCount > 0 &&
-      seatBook.modifiedCount > 0 &&
-      reservationUpdate.modifiedCount > 0
-    ) {
-      sendMessage(res, 200, reservationUpdate, "Update item successfully");
-    } else {
-      sendMessage(res, 400, null, "Update item failed");
-    }
-  } catch (err) {
-    console.log(err.stack);
-  }
+  //   if (
+  //     itemCancel.modifiedCount > 0 &&
+  //     seatBook.modifiedCount > 0 &&
+  //     reservationUpdate.modifiedCount > 0
+  //   ) {
+  //     sendMessage(res, 200, reservationUpdate, "Update item successfully");
+  //   } else {
+  //     sendMessage(res, 400, null, "Update item failed");
+  //   }
+  // } catch (err) {
+  //   console.log(err.stack);
+  // }
 };
 
 const deleteItem = async (req, res) => {
-  try {
-    const { flight, id, seat } = req.body;
-    console.log(flight, id, seat);
-    if (JSON.stringify(req.body).length > 2) {
-      const client = new MongoClient(MONGO_URI, options);
-      await client.connect();
-      console.log("connected!");
-      const db = client.db(DATABASE_NAME);
-      const result = await db.collection("items").deleteOne({ id: id });
-      const cancelSeat = await db
-        .collection("companies")
-        .updateOne(
-          { flight: flight, "seats.id": seat },
-          { $set: { "seats.$.isAvailable": true } }
-        );
-      console.log(result);
-      console.log(cancelSeat);
-      result
-        ? sendMessage(res, 200, result, "Delete item success")
-        : sendMessage(res, 404, null, "Delete item falied");
-      client.close();
-    } else {
-      sendMessage(res, 403, null, "required field not filled");
-    }
-  } catch (err) {
-    console.log(err.stack);
-  }
+  // try {
+  //   const { flight, id, seat } = req.body;
+  //   console.log(flight, id, seat);
+  //   if (JSON.stringify(req.body).length > 2) {
+  //     const client = new MongoClient(MONGO_URI, options);
+  //     await client.connect();
+  //     console.log("connected!");
+  //     const db = client.db(DATABASE_NAME);
+  //     const result = await db.collection("items").deleteOne({ id: id });
+  //     const cancelSeat = await db
+  //       .collection("companies")
+  //       .updateOne(
+  //         { flight: flight, "seats.id": seat },
+  //         { $set: { "seats.$.isAvailable": true } }
+  //       );
+  //     console.log(result);
+  //     console.log(cancelSeat);
+  //     result
+  //       ? sendMessage(res, 200, result, "Delete item success")
+  //       : sendMessage(res, 404, null, "Delete item falied");
+  //     client.close();
+  //   } else {
+  //     sendMessage(res, 403, null, "required field not filled");
+  //   }
+  // } catch (err) {
+  //   console.log(err.stack);
+  // }
 };
 
 module.exports = {
