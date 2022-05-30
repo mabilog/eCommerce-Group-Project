@@ -39,13 +39,15 @@ const getCompanies = async (req, res) => {
 // get single conpany by name
 const getCompany = async (req, res) => {
   try {
-    const thisCompany = req.params;
+    const thisCompany = req.params.companyId;
     console.log(thisCompany);
     const client = new MongoClient(MONGO_URI, options);
     await client.connect();
     console.log("connected!");
     const db = client.db(DATABASE_NAME);
-    const result = await db.collection("companies").findOne(thisCompany);
+    const result = await db
+      .collection("companies")
+      .findOne({ _id: thisCompany });
     console.log(result);
     result
       ? sendMessage(res, 200, result, "Found company success!")
@@ -78,6 +80,9 @@ const getItems = async (req, res) => {
 
 // get single item by id  
 const getItem = async (req, res) => {
+  let { id } = req.params;
+  console.log(req.params);
+  console.log(id);
   try {
     // _id from frontend is string
     const itemIdString = req.params._id;
