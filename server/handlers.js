@@ -20,6 +20,7 @@ const sendMessage = (res, status, data, message = "") => {
 
 // get all companies
 const getCompanies = async (req, res) => {
+  // console.log(process.env.MONGO_URI);
   try {
     const client = new MongoClient(MONGO_URI, options);
     await client.connect();
@@ -39,15 +40,12 @@ const getCompanies = async (req, res) => {
 // get single conpany by name
 const getCompany = async (req, res) => {
   try {
-    const thisCompany = req.params.companyId;
-    console.log(thisCompany);
+    const { _id } = req.params;
     const client = new MongoClient(MONGO_URI, options);
     await client.connect();
     console.log("connected!");
     const db = client.db(DATABASE_NAME);
-    const result = await db
-      .collection("companies")
-      .findOne({ _id: thisCompany });
+    const result = await db.collection("companies").findOne({ _id });
     console.log(result);
     result
       ? sendMessage(res, 200, result, "Found company success!")
@@ -78,24 +76,21 @@ const getItems = async (req, res) => {
   }
 };
 
-// get single item by id  
+// get single item by id
 const getItem = async (req, res) => {
-  let { id } = req.params;
-  console.log(req.params);
-  console.log(id);
   try {
-    // _id from frontend is string
-    const itemIdString = req.params._id;
-    const idNumber = parseInt(itemIdString); 
+    const { _id } = req.params;
+    const idNumber = parseInt(_id);
     console.log(idNumber);
     const client = new MongoClient(MONGO_URI, options);
     await client.connect();
     const db = client.db(DATABASE_NAME);
 
     const result = await db.collection("items").findOne({ _id: idNumber });
-    console.log(result);
     result
-      ? res.status(200).json({ status: 200, data: result, message: "Found item success!" })
+      ? res
+          .status(200)
+          .json({ status: 200, data: result, message: "Found item success!" })
       : res.status(400).json({ status: 400, message: "Item not found" });
 
     client.close();
@@ -104,31 +99,32 @@ const getItem = async (req, res) => {
   }
 };
 
-const addItem = async (req, res) => {
-  try {
-    const newItem = req.body;
-    const client = new MongoClient(MONGO_URI, options);
-    await client.connect();
-    console.log("connected!");
+// not needed for now
+// const addItem = async (req, res) => {
+//   try {
+//     const newItem = req.body;
+//     const client = new MongoClient(MONGO_URI, options);
+//     await client.connect();
+//     console.log("connected!");
 
-    const db = client.db(DATABASE_NAME);
-    const result = await db.collection("items").insertOne(newItem);
-    console.log(result);
+//     const db = client.db(DATABASE_NAME);
+//     const result = await db.collection("items").insertOne(newItem);
+//     console.log(result);
 
-    result
-      ? sendMessage(res, 200, result, "Add item success!")
-      : sendMessage(res, 400, null, "Add item failed!");
+//     result
+//       ? sendMessage(res, 200, result, "Add item success!")
+//       : sendMessage(res, 400, null, "Add item failed!");
 
-    client.close();
-    console.log("disconnected");
-  } catch (err) {
-    console.log(err.stack);
-  }
-};
+//     client.close();
+//     console.log("disconnected");
+//   } catch (err) {
+//     console.log(err.stack);
+//   }
+// };
 
 const buyItem = async (req, res) => {
   try {
-    const { _id, numInStock } = req.body;
+    const { _id, numInStock, quantity } = req.body;
 
     const client = new MongoClient(MONGO_URI, options);
     await client.connect();
@@ -136,12 +132,12 @@ const buyItem = async (req, res) => {
     const db = client.db(DATABASE_NAME);
 
     const itemBuy = await db
-    .collection("items")
-    .updateOne({ _id: _id },  { $set: { numInStock: numInStock - 1 } });
+      .collection("items")
+      .updateOne({ _id: _id }, { $set: { numInStock: numInStock - quantity } });
 
     if (itemBuy.modifiedCount > 0) {
-      sendMessage(res, 200, itemBuy , "Buy item successfully");
-    } else{
+      sendMessage(res, 200, itemBuy, "Buy item successfully");
+    } else {
       sendMessage(res, 400, null, "Buy item failed");
     }
   } catch (err) {
@@ -149,9 +145,11 @@ const buyItem = async (req, res) => {
   }
 };
 
+// orders collection
+// update orders collection and items collection
 const cancelItem = async (req, res) => {
   try {
-    const { _id, numInStock } = req.body;
+    const { _id, numInStock, quantity } = req.body;
 
     const client = new MongoClient(MONGO_URI, options);
     await client.connect();
@@ -160,11 +158,11 @@ const cancelItem = async (req, res) => {
 
     const itemCancel = await db
       .collection("items")
-      .updateOne({ _id: _id },  { $set: { numInStock: numInStock + 1 } });
+      .updateOne({ _id: _id }, { $set: { numInStock: numInStock + quantity } });
 
-    if ( itemCancel.modifiedCount > 0 ) {
+    if (itemCancel.modifiedCount > 0) {
       sendMessage(res, 200, itemCancel, "Cancel item successfully");
-    } else{
+    } else {
       sendMessage(res, 400, null, "Cancel item failed");
     }
   } catch (err) {
@@ -172,25 +170,26 @@ const cancelItem = async (req, res) => {
   }
 };
 
-const deleteItem = async (req, res) => {
-  try {
-    const { _id } = req.body;
+// const deleteItem = async (req, res) => {
+//   try {
+//     const { _id } = req.body;
 
-    const client = new MongoClient(MONGO_URI, options);
-    await client.connect();
-    console.log("connected!");
-    const db = client.db(DATABASE_NAME);
-    const result = await db.collection("items").deleteOne({ _id: _id });
+//     const client = new MongoClient(MONGO_URI, options);
+//     await client.connect();
+//     console.log("connected!");
+//     const db = client.db(DATABASE_NAME);
+//     const result = await db.collection("items").deleteOne({ _id: _id });
 
-    result.deletedCount === 1
-      ? sendMessage(res, 200, result, "Delete item success")
-      : sendMessage(res, 404, null, "Delete item falied");
-    client.close();
+//     result.deletedCount === 1
+//       ? sendMessage(res, 200, result, "Delete item success")
+//       : sendMessage(res, 404, null, "Delete item falied");
+//     client.close();
+//   } catch (err) {
+//     console.log(err.stack);
+//   }
+// };
 
-  } catch (err) {
-    console.log(err.stack);
-  }
-};
+// delete order
 
 module.exports = {
   getCompanies,
@@ -198,8 +197,8 @@ module.exports = {
   getItems,
   getItem,
 
-  addItem,
+  // addItem,
   buyItem,
   cancelItem,
-  deleteItem,
+  // deleteItem,
 };

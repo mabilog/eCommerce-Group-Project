@@ -11,10 +11,10 @@ const {
   getItems,
   getItem,
 
-  addItem,
+  // addItem,
   buyItem,
   cancelItem,
-  deleteItem,
+  // deleteItem,
 } = require("./handlers");
 
 express()
@@ -39,15 +39,15 @@ express()
   .get("/bacon", (req, res) => res.status(200).json("🥓"))
 
   .get("/api/get-companies", getCompanies)
-  .get("/api/get-companies/:name", getCompany)
+  .get("/api/get-companies/:_id", getCompany)
   .get("/api/get-items", getItems)
-  .get("/api/get-items/:id", getItem)
+  .get("/api/get-items/:_id", getItem)
 
-  .post("/api/add-item", addItem)
-  
-    .patch("/api/buy-item", buyItem)
+  // .post("/api/add-item", addItem)
+
+  .patch("/api/buy-item", buyItem)
   .patch("/api/cancel-item", cancelItem)
 
-  .delete("/api/delete-item", deleteItem)
+  // .delete("/api/delete-item", deleteItem)
 
   .listen(PORT, () => console.info(`Listening on port ${PORT}`));
