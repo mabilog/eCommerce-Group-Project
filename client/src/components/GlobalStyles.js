@@ -7,8 +7,8 @@ export default createGlobalStyle`
    License: none (public domain)
 */
 :root {
-      --primary-color: rgb(74,78,43);
-      --secondary-color: rgb(183,181,161);
+	--primary-color: rgb(116,125,55);
+      --secondary-color: rgb(198,203,164);
       --page-horizontal-padding: 20px;
     }
 
