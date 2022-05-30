@@ -6,6 +6,11 @@ export default createGlobalStyle`
    v2.0 | 20110126
    License: none (public domain)
 */
+:root {
+      --primary-color: rgb(74,78,43);
+      --secondary-color: rgb(183,181,161);
+      --page-horizontal-padding: 20px;
+    }
 
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
