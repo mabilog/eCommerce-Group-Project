@@ -19,24 +19,21 @@ const ItemDetails = () => {
   return (
     <ItemDetailsWrapper>
       <Wrapper>
-        <Left>
-          <img src={items[0].imageSrc} alt={items[0].name} srcset="" />
-        </Left>
+        <img src={items[0].imageSrc} alt={items[0].name} srcset="" />
         <Right>
-          <div>
+          <TitleWrapper>
             <h3>{items[0].name}</h3>
             <span>id: {items[0]._id}</span>
-            <span>{items[0].category}</span>
-          </div>
-          <div>
+          </TitleWrapper>
+          <DetailsWrapper>
             <span>category: {items[0].category}</span>
             <span>body location: {items[0].body_location}</span>
             <span>made by: {items[0].companyId}</span>
-          </div>
-          <div>
+          </DetailsWrapper>
+          <StockWrapper>
             <button>{items[0].price} - </button>
             <span>In Stock : {items[0].numInStock}</span>
-          </div>
+          </StockWrapper>
         </Right>
       </Wrapper>
     </ItemDetailsWrapper>
@@ -61,9 +58,16 @@ const Wrapper = styled.div`
 
 const Left = styled.div``;
 const Right = styled.div`
+  height: 175px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-around;
 `;
+
+const TitleWrapper = styled.div``;
+
+const DetailsWrapper = styled.div``;
+
+const StockWrapper = styled.div``;
 
 export default ItemDetails;
