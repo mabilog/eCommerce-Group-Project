@@ -12,9 +12,11 @@ const {
   getItem,
 
   // addItem,
+  createOrder,
   buyItem,
   cancelItem,
   // deleteItem,
+  deleteOrder,
 } = require("./handlers");
 
 express()
@@ -44,10 +46,11 @@ express()
   .get("/api/get-items/:_id", getItem)
 
   // .post("/api/add-item", addItem)
-
+  .post("/api/create-order", createOrder)
   .patch("/api/buy-item", buyItem)
   .patch("/api/cancel-item", cancelItem)
 
   // .delete("/api/delete-item", deleteItem)
+  .delete("/api/delete-order", deleteOrder)
 
   .listen(PORT, () => console.info(`Listening on port ${PORT}`));
