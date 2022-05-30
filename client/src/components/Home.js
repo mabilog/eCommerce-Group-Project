@@ -1,10 +1,12 @@
 import styled from "styled-components";
-import ItemCard from "./ItemCard";
+import ListingGrid from "./ListingGrid";
+import {items} from "../data/items"
 
-const Home = () => {
+
+const Home = (props) => {
     return (
         <>
-<ItemCard/>
+<ListingGrid itemList={Object.values(items)} />
         </>
     )
 }
