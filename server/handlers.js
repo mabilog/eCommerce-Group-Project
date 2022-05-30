@@ -78,23 +78,24 @@ const getItems = async (req, res) => {
   }
 };
 
-// get single item by id
+// get single item by id  
 const getItem = async (req, res) => {
   let { id } = req.params;
   console.log(req.params);
   console.log(id);
   try {
-    // console.log(thisItemId);
+    // _id from frontend is string
+    const itemIdString = req.params._id;
+    const idNumber = parseInt(itemIdString); 
+    console.log(idNumber);
     const client = new MongoClient(MONGO_URI, options);
     await client.connect();
     const db = client.db(DATABASE_NAME);
 
-    const result = await db.collection("items").findOne(thisItem);
+    const result = await db.collection("items").findOne({ _id: idNumber });
     console.log(result);
     result
-      ? res
-          .status(200)
-          .json({ status: 200, data: result, message: "Found item success!" })
+      ? res.status(200).json({ status: 200, data: result, message: "Found item success!" })
       : res.status(400).json({ status: 400, message: "Item not found" });
 
     client.close();
@@ -124,18 +125,33 @@ const addItem = async (req, res) => {
     console.log(err.stack);
   }
 };
-const updateItem = async (req, res) => {
+
+const buyItem = async (req, res) => {
   try {
-    const {
-      _id,
-      name,
-      price,
-      body_location,
-      category,
-      imageSrc,
-      numInStock,
-      companyId,
-    } = req.body;
+    const { _id, numInStock } = req.body;
+
+    const client = new MongoClient(MONGO_URI, options);
+    await client.connect();
+    console.log("connected!");
+    const db = client.db(DATABASE_NAME);
+
+    const itemBuy = await db
+    .collection("items")
+    .updateOne({ _id: _id },  { $set: { numInStock: numInStock - 1 } });
+
+    if (itemBuy.modifiedCount > 0) {
+      sendMessage(res, 200, itemBuy , "Buy item successfully");
+    } else{
+      sendMessage(res, 400, null, "Buy item failed");
+    }
+  } catch (err) {
+    console.log(err.stack);
+  }
+};
+
+const cancelItem = async (req, res) => {
+  try {
+    const { _id, numInStock } = req.body;
 
     const client = new MongoClient(MONGO_URI, options);
     await client.connect();
@@ -144,30 +160,12 @@ const updateItem = async (req, res) => {
 
     const itemCancel = await db
       .collection("items")
-      .updateOne({ _id: _id }, { $set: { "seats.$.isAvailable": true } });
+      .updateOne({ _id: _id },  { $set: { numInStock: numInStock + 1 } });
 
-    const seatBook = await db
-      .collection("items")
-      .updateOne(
-        { flight: flight, "seats.id": newSeat },
-        { $set: { numInStock: numInStock + 1 } }
-      );
-
-    const reservationUpdate = await db
-      .collection("items")
-      .updateOne(
-        { id },
-        { $set: { seat: newSeat, givenName, surname, email } }
-      );
-
-    if (
-      itemCancel.modifiedCount > 0 &&
-      seatBook.modifiedCount > 0 &&
-      reservationUpdate.modifiedCount > 0
-    ) {
-      sendMessage(res, 200, reservationUpdate, "Update item successfully");
-    } else {
-      sendMessage(res, 400, null, "Update item failed");
+    if ( itemCancel.modifiedCount > 0 ) {
+      sendMessage(res, 200, itemCancel, "Cancel item successfully");
+    } else{
+      sendMessage(res, 400, null, "Cancel item failed");
     }
   } catch (err) {
     console.log(err.stack);
@@ -176,29 +174,19 @@ const updateItem = async (req, res) => {
 
 const deleteItem = async (req, res) => {
   try {
-    const { flight, id, seat } = req.body;
-    console.log(flight, id, seat);
-    if (JSON.stringify(req.body).length > 2) {
-      const client = new MongoClient(MONGO_URI, options);
-      await client.connect();
-      console.log("connected!");
-      const db = client.db(DATABASE_NAME);
-      const result = await db.collection("items").deleteOne({ id: id });
-      const cancelSeat = await db
-        .collection("companies")
-        .updateOne(
-          { flight: flight, "seats.id": seat },
-          { $set: { "seats.$.isAvailable": true } }
-        );
-      console.log(result);
-      console.log(cancelSeat);
-      result
-        ? sendMessage(res, 200, result, "Delete item success")
-        : sendMessage(res, 404, null, "Delete item falied");
-      client.close();
-    } else {
-      sendMessage(res, 403, null, "required field not filled");
-    }
+    const { _id } = req.body;
+
+    const client = new MongoClient(MONGO_URI, options);
+    await client.connect();
+    console.log("connected!");
+    const db = client.db(DATABASE_NAME);
+    const result = await db.collection("items").deleteOne({ _id: _id });
+
+    result.deletedCount === 1
+      ? sendMessage(res, 200, result, "Delete item success")
+      : sendMessage(res, 404, null, "Delete item falied");
+    client.close();
+
   } catch (err) {
     console.log(err.stack);
   }
@@ -211,6 +199,7 @@ module.exports = {
   getItem,
 
   addItem,
-  updateItem,
+  buyItem,
+  cancelItem,
   deleteItem,
 };
