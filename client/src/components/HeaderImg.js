@@ -1,4 +1,4 @@
-import dreamteam from "../images/dreamteamheader.png"
+import dreamteam from "../images/dreamteamheader1.png"
 import styled from "styled-components";
 
 const HeaderImg = () => {
