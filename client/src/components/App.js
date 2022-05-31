@@ -21,16 +21,18 @@ function App() {
         <ComponentWrapper>
           <Routes>
             <Route exact path="/" element={<Home />} />
-              {/* <Home />
+            {/* <Home />
             </Route> */}
 
-             <Route exact path="/items/:itemId" element={<ItemDetails />} />
-              {/* <ItemDetails />
+            <Route exact path="/items/:itemId" element={<ItemDetails />} />
+
+            {/* <ItemDetails />
             </Route> */}
 
             {/*<Route path="/cart/:orderId">
               <Cart />
             </Route> */}
+            <Route exact path="/cart/:orderId" element={<Cart />} />
           </Routes>
         </ComponentWrapper>
       </BrowserRouter>
