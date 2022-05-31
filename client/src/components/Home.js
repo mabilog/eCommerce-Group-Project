@@ -2,6 +2,7 @@ import styled from "styled-components";
 import ListingGrid from "./ListingGrid";
 //import {items} from "../data/items"
 import { useEffect, useState } from 'react'
+import HeaderImg from "./HeaderImg";
 
 const Home = (props) => {
 
@@ -23,7 +24,10 @@ const Home = (props) => {
   return (
     <>
       {isLoaded &&
+      <>
+      <HeaderImg/>
          <ListingGrid itemList={Object.values(items)} />
+         </>
       }
    </>
   )

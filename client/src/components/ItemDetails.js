@@ -8,7 +8,7 @@ const ItemDetails = () => {
   const { itemId } = useParams();
 
   const [ item, setItem] = useState([]);
-  const [ company, setCompany] = useState({});
+  const [ company, setCompany] = useState();
   const [ isLoaded, setIsLoaded ] = useState(false);
 
   useEffect(() => {
@@ -18,6 +18,7 @@ const ItemDetails = () => {
       // console.log("got res object from backend & assign it to variable itemsDataObj:", itemDataObj)
       // console.log("then assign res object data property(array) to variable items at frontend ", itemDataObj.data)
       setItem(itemDataObj.data)
+      console.log("Hello", item);
       setIsLoaded(true)
     });
 
@@ -51,16 +52,16 @@ const ItemDetails = () => {
               <Right>
                 <TitleWrapper>
                   <h3>{item.name}</h3>
-                  <span>{item._id}</span>
+                  <span>Item ID: {item._id}</span>
                 </TitleWrapper>
-                <StockWrapper>
-                  <button>{item.price} - Buy now</button>
-                  <span>In Stock : {item.numInStock}</span>
+                <StockWrapper>{item.numInStock <= 0 ? <OOSButton>Out of stock</OOSButton> : 
+                <div><CartButton>{item.price} - Add to Cart</CartButton> 
+                <div>{item.numInStock} items in stock</div></div>}
                 </StockWrapper>
                 <DetailsWrapper>
-                  <span>category: {item.category}</span>
-                  <span>body location: {item.body_location}</span>
-                  <span>made by: {item.companyId}</span>
+                  <span>Category: {item.category}</span>
+                  <span>Body Location: {item.body_location}</span>
+                  <span>Made By: {item.companyId}</span>
                   {/* <span>made by: {company.name}</span> */}
                 </DetailsWrapper>
               </Right>
@@ -87,6 +88,9 @@ const Wrapper = styled.div`
   justify-content: center;
   gap: 30px;
   padding: 20px;
+  background-color: white;
+  border-radius: 10px;
+  max-width: 550px;
 `;
 
 const Left = styled.div``;
@@ -100,6 +104,8 @@ const Right = styled.div`
 
 const TitleWrapper = styled.div`
   max-width: 500px;
+  text-align: center;
+  line-height: 20px;
   h3 {
     font-weight: 600;
     font-size: 26px;
@@ -113,21 +119,37 @@ const StockWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 10px;
+  text-align: center;
+  line-height: 30px;
+  `;
 
-  button {
+  const CartButton = styled.button`
     padding: 15px 40px;
     border: none;
     border-radius: 10px;
-    background-color: #460fe0;
+    background-color: var(--primary-color);
+    font-family: Jost;
     color: #fff;
     font-size: 16px;
     font-weight: 600;
-  }
 `;
+
 const DetailsWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
 `;
+
+const OOSButton = styled.button`
+padding: 15px 40px;
+    border: none;
+    border-radius: 10px;
+    color: grey;
+    background-color: lightgrey;
+    font-family: Jost;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+`
 
 export default ItemDetails;
