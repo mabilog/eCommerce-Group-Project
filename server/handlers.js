@@ -125,9 +125,6 @@ const createOrder = async (req, res) => {
       ...req.body,
     };
     const resultOrder = await db.collection("orders").insertOne(orderObj);
-
-    console.log(resultOrder);
-
     res
       .status(200)
       .json({ status: 200, resultOrder, orderObj, message: "sup" });
@@ -164,7 +161,6 @@ const deleteOrder = async (req, res) => {
 
     // 1. Find order using _id
     const result = await db.collection("orders").findOne({ _id });
-    console.log("findOne: ", result);
 
     // 2. Iterate through the cartItems and update numInStock
     result.cartItems.forEach(async (item) => {
@@ -174,7 +170,7 @@ const deleteOrder = async (req, res) => {
           { _id: parseInt(item.itemId) },
           { $inc: { numInStock: parseInt(item.quantity) } }
         );
-      console.log("cartItems: ", result);
+      console.log(result);
     });
 
     // 3. Delete order using _id
