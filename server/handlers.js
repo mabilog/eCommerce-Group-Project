@@ -149,41 +149,44 @@ const buyItem = async (req, res) => {
 // update orders collection and items collection
 
 const createOrder = async (req, res) => {
-  // req.body.cartItems.forEach((item) => {
-  //   // const updateItem = await.db.collection('Items').updateOne({p})
-  //   console.log(parseInt(item.itemId));
-  // });
-  // console.log(req.body);
-  // req.body.cartItems.forEach(item => )
+  const order = req.body;
+
   try {
     const client = new MongoClient(MONGO_URI, options);
     await client.connect();
-    console.log("connected!");
+
+    console.log("connecting");
     const db = client.db(DATABASE_NAME);
+    /**
+     * iterating through the req.body.cartItems array,
+     * finding the corresponding _id,
+     * and updating each document in the items collection
+     */
+    order.cartItems.forEach(async (item) => {
+      const result = await db
+        .collection("items")
+        .updateOne(
+          { _id: parseInt(item.itemId) },
+          { $inc: { numInStock: -parseInt(item.quantity) } }
+        );
 
-    // req.body.cartItems.forEach(async (item) => {
-    //   // const updateItem = await.db.collection('Items').updateOne({p})
-    //   // console.log(parseInt(item.itemId));
-    //   const result = await db
-    //     .collection("Items")
-    //     .findOne(parseInt(item.itemId));
+      console.log(result);
+    });
 
-    //   console.log(result);
-    // });
-    const result = await db
-      .collection("Items")
-      .find()
-      .forEach(() => {});
-    // const result = await db.collection("Orders").insertOne();
-    // result.length > 0
-    //   ? sendMessage(res, 200, result, "Found items success!")
-    //   : sendMessage(res, 404, null, "Items not found");
-    res.status(200).json({ status: 200, message: "sup" });
+    const resultOrder = await db.collection("orders").insertOne(order);
+
+    console.log(resultOrder);
+
+    res.status(200).json({ status: 200, resultOrder, message: "sup" });
+
     client.close();
   } catch (err) {
-    console.log(err.stack);
+    console.log(err);
+    res.status(500).json({
+      status: 500,
+      message: "Something went wrong when creating a new order",
+    });
   }
-  // res.status(200).json({ status: 200, message: "sup" });
 };
 
 const updateOrder = async (req, res) => {
@@ -248,16 +251,22 @@ const deleteOrder = async (req, res) => {
     await client.connect();
 
     const db = client.db(DATABASE_NAME);
-    const result = await db.collection("Orders").deleteOne(_id);
 
-    result.deleteCount === 1
-      ? sendMessage(res, 200, result, "Order Successfully Cancelled")
-      : sendMessage(
-          res,
-          404,
-          null,
-          "Something went wrong while cancelling order"
-        );
+    /**
+     * Find order and iterate through the cartItems and update the numInStock
+     */
+    const result = await db.collection("Orders").find({ _id });
+    console.log(result);
+
+    // result.deleteCount === 1
+    //   ? sendMessage(res, 200, result, "Order Successfully Cancelled")
+    //   : sendMessage(
+    //       res,
+    //       404,
+    //       null,
+    //       "Something went wrong while cancelling order"
+    //     );
+    client.close();
   } catch (err) {
     console.log(err.stack);
     res.status(500).json({
