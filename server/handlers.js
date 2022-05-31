@@ -10,7 +10,7 @@ const options = {
 };
 
 // use this package to generate unique ids: https://www.npmjs.com/package/uuid
-// const { v4: uuidv4 } = require("uuid");
+const { v4: uuidv4 } = require("uuid");
 
 const sendMessage = (res, status, data, message = "") => {
   return res
@@ -23,7 +23,6 @@ const getCompanies = async (req, res) => {
   try {
     const client = new MongoClient(MONGO_URI, options);
     await client.connect();
-    console.log("connected!");
 
     const db = client.db(DATABASE_NAME);
     const result = await db.collection("companies").find().toArray();
@@ -39,14 +38,17 @@ const getCompanies = async (req, res) => {
 // get single conpany by name
 const getCompany = async (req, res) => {
   try {
-    const thisCompany = req.params;
-    console.log(thisCompany);
+
+    const companyId = parseInt(req.params._id);
+
     const client = new MongoClient(MONGO_URI, options);
     await client.connect();
-    console.log("connected!");
+
     const db = client.db(DATABASE_NAME);
-    const result = await db.collection("companies").findOne(thisCompany);
-    console.log(result);
+
+    const result = await db.collection("companies").findOne({ _id: companyId });
+
+
     result
       ? sendMessage(res, 200, result, "Found company success!")
       : sendMessage(res, 404, null, "Company not found!");
@@ -62,7 +64,6 @@ const getItems = async (req, res) => {
   try {
     const client = new MongoClient(MONGO_URI, options);
     await client.connect();
-    console.log("connected!");
 
     const db = client.db(DATABASE_NAME);
     const result = await db.collection("items").find().toArray();
@@ -78,18 +79,18 @@ const getItems = async (req, res) => {
 
 // get single item by id, _id is string from frentend
 const getItem = async (req, res) => {
-  let idString = req.params._id;
-
-  let idNumber = parseInt(idString);
 
   try {
-    // console.log(thisItemId);
+    const { _id } = req.params;
+    const idNumber = parseInt(_id);
+
     const client = new MongoClient(MONGO_URI, options);
     await client.connect();
     const db = client.db(DATABASE_NAME);
 
-    const result = await db.collection("items").findOne({_id: idNumber});
-    console.log(result);
+
+    const result = await db.collection("items").findOne({ _id: idNumber });
+
     result
       ? res
           .status(200)
@@ -102,114 +103,104 @@ const getItem = async (req, res) => {
   }
 };
 
-const addItem = async (req, res) => {
+const createOrder = async (req, res) => {
+  const order = req.body;
+
   try {
-    const newItem = req.body;
     const client = new MongoClient(MONGO_URI, options);
     await client.connect();
-    console.log("connected!");
 
     const db = client.db(DATABASE_NAME);
-    const result = await db.collection("items").insertOne(newItem);
-    console.log(result);
+    /**
+     * 1. iterating through the req.body.cartItems array,
+     * 2. finding the corresponding _id,
+     * 3. and updating each document in the items collection
+     */
+    order.cartItems.forEach(async (item) => {
+      const result = await db
+        .collection("items")
+        .updateOne(
+          { _id: parseInt(item.itemId) },
+          { $inc: { numInStock: -parseInt(item.quantity) } }
+        );
 
-    result
-      ? sendMessage(res, 200, result, "Add item success!")
-      : sendMessage(res, 400, null, "Add item failed!");
+      console.log(result);
+    });
+
+    const orderObj = {
+      _id: uuidv4(),
+      ...req.body,
+    };
+    const resultOrder = await db.collection("orders").insertOne(orderObj);
+    res
+      .status(200)
+      .json({ status: 200, resultOrder, orderObj, message: "sup" });
 
     client.close();
-    console.log("disconnected");
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      status: 500,
+      message: "Something went wrong when creating a new order",
+    });
+  }
+};
+
+
+const updateOrder = async (req, res) => {
+  try {
+    const client = new MongoClient(MONGO_URI, options);
+    await client.connect();
+
+    const db = client.db(DATABASE_NAME);
+    client.close();
   } catch (err) {
     console.log(err.stack);
   }
 };
-const updateItem = async (req, res) => {
-  // try {
-  //   const {
-  //     _id,
-  //     name,
-  //     price,
-  //     body_location,
-  //     category,
-  //     imageSrc,
-  //     numInStock,
-  //     companyId,
-  //   } = req.body;
 
-  //   const client = new MongoClient(MONGO_URI, options);
-  //   await client.connect();
-  //   console.log("connected!");
-  //   const db = client.db(DATABASE_NAME);
+const deleteOrder = async (req, res) => {
+  try {
+    const { _id } = req.query;
+    const client = new MongoClient(MONGO_URI, options);
+    await client.connect();
 
-  //   const itemCancel = await db
-  //     .collection("items")
-  //     .updateOne({ _id: _id }, { $set: { "seats.$.isAvailable": true } });
+    const db = client.db(DATABASE_NAME);
 
-  //   const seatBook = await db
-  //     .collection("items")
-  //     .updateOne(
-  //       { flight: flight, "seats.id": newSeat },
-  //       { $set: { numInStock: numInStock + 1 } }
-  //     );
+    // 1. Find order using _id
+    const result = await db.collection("orders").findOne({ _id });
 
-  //   const reservationUpdate = await db
-  //     .collection("items")
-  //     .updateOne(
-  //       { id },
-  //       { $set: { seat: newSeat, givenName, surname, email } }
-  //     );
+    // 2. Iterate through the cartItems and update numInStock
+    result.cartItems.forEach(async (item) => {
+      const result = await db
+        .collection("items")
+        .updateOne(
+          { _id: parseInt(item.itemId) },
+          { $inc: { numInStock: parseInt(item.quantity) } }
+        );
+      console.log(result);
+    });
 
-  //   if (
-  //     itemCancel.modifiedCount > 0 &&
-  //     seatBook.modifiedCount > 0 &&
-  //     reservationUpdate.modifiedCount > 0
-  //   ) {
-  //     sendMessage(res, 200, reservationUpdate, "Update item successfully");
-  //   } else {
-  //     sendMessage(res, 400, null, "Update item failed");
-  //   }
-  // } catch (err) {
-  //   console.log(err.stack);
-  // }
+    // 3. Delete order using _id
+    const resultDeleteOrder = await db.collection("orders").deleteOne({ _id });
+
+    res.status(200).json({ status: 200, result, resultDeleteOrder });
+    client.close();
+  } catch (err) {
+    console.log(err.stack);
+    res.status(500).json({
+      status: 500,
+      message: "Someting went wrong",
+    });
+  }
+
 };
-
-const deleteItem = async (req, res) => {
-  // try {
-  //   const { flight, id, seat } = req.body;
-  //   console.log(flight, id, seat);
-  //   if (JSON.stringify(req.body).length > 2) {
-  //     const client = new MongoClient(MONGO_URI, options);
-  //     await client.connect();
-  //     console.log("connected!");
-  //     const db = client.db(DATABASE_NAME);
-  //     const result = await db.collection("items").deleteOne({ id: id });
-  //     const cancelSeat = await db
-  //       .collection("companies")
-  //       .updateOne(
-  //         { flight: flight, "seats.id": seat },
-  //         { $set: { "seats.$.isAvailable": true } }
-  //       );
-  //     console.log(result);
-  //     console.log(cancelSeat);
-  //     result
-  //       ? sendMessage(res, 200, result, "Delete item success")
-  //       : sendMessage(res, 404, null, "Delete item falied");
-  //     client.close();
-  //   } else {
-  //     sendMessage(res, 403, null, "required field not filled");
-  //   }
-  // } catch (err) {
-  //   console.log(err.stack);
-  // }
-};
-
 module.exports = {
   getCompanies,
   getCompany,
   getItems,
   getItem,
 
-  addItem,
-  updateItem,
-  deleteItem,
+  createOrder,
+  deleteOrder,
 };

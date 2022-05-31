@@ -11,9 +11,8 @@ const {
   getItems,
   getItem,
 
-  addItem,
-  updateItem,
-  deleteItem,
+  createOrder,
+  deleteOrder,
 } = require("./handlers");
 
 express()
@@ -35,15 +34,12 @@ express()
   .use("/", express.static(__dirname + "/"))
 
   // REST endpoints?
-  .get("/bacon", (req, res) => res.status(200).json("🥓"))
-
   .get("/api/get-companies", getCompanies)
-  .get("/api/get-companies/:name", getCompany)
+  .get("/api/get-companies/:_id", getCompany)
   .get("/api/get-items", getItems)
-  .get("/api/get-items/:id", getItem)
+  .get("/api/get-items/:_id", getItem)
 
-  .post("/api/add-item", addItem)
-  .patch("/api/update-item", updateItem)
-  .delete("/api/delete-reservation", deleteItem)
+  .post("/api/create-order", createOrder)
+  .delete("/api/delete-order", deleteOrder)
 
   .listen(PORT, () => console.info(`Listening on port ${PORT}`));
