@@ -38,12 +38,16 @@ const getCompanies = async (req, res) => {
 // get single conpany by name
 const getCompany = async (req, res) => {
   try {
+
     const companyId = parseInt(req.params._id);
+
     const client = new MongoClient(MONGO_URI, options);
     await client.connect();
 
     const db = client.db(DATABASE_NAME);
+
     const result = await db.collection("companies").findOne({ _id: companyId });
+
 
     result
       ? sendMessage(res, 200, result, "Found company success!")
@@ -73,8 +77,9 @@ const getItems = async (req, res) => {
   }
 };
 
-// get single item by id
+// get single item by id, _id is string from frentend
 const getItem = async (req, res) => {
+
   try {
     const { _id } = req.params;
     const idNumber = parseInt(_id);
@@ -83,7 +88,9 @@ const getItem = async (req, res) => {
     await client.connect();
     const db = client.db(DATABASE_NAME);
 
+
     const result = await db.collection("items").findOne({ _id: idNumber });
+
     result
       ? res
           .status(200)
@@ -139,6 +146,7 @@ const createOrder = async (req, res) => {
   }
 };
 
+
 const updateOrder = async (req, res) => {
   try {
     const client = new MongoClient(MONGO_URI, options);
@@ -185,6 +193,7 @@ const deleteOrder = async (req, res) => {
       message: "Someting went wrong",
     });
   }
+
 };
 module.exports = {
   getCompanies,
