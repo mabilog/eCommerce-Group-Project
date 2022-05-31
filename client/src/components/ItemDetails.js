@@ -1,57 +1,76 @@
-// ItemCard will link to ItemDetails (like in fruit store exercise)
-import { useEffect, useContext } from "react";
 import styled from "styled-components";
+import React from "react";
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from 'react'
 
-import { items } from "../data/items";
-const ItemDetails = ({item}) => {
-  /**
-   * Angelo's notes:
-   *
-   * I've created just a rought template on what would be relevant to the item details page.
-   * Feel free to go and change the styling to your hearts content.
-   *
-   * It would be wise to fetch information from the back as the component loads.
-   * - Taking the URL paramenter and doing a fetch using the item id.
-   * - .then assigning it to a local useState and displaying the information when the fetch is complete.
-   *
-   * I have provided what the fetched data should look like below
-   */
+const ItemDetails = () => {
 
-  /**
-   * 
-    "name": "Barska GB12166 Fitness Watch with Heart Rate Monitor",
-    "price": "$49.99",
-    "body_location": "Wrist",
-    "category": "Fitness",
-    "_id": 6543,
-    "imageSrc": <imageSrc information>
-    "numInStock": 9,
-    "companyId": 19962
-   */
+  const { itemId } = useParams();
 
-    console.log(items)
-  return (
-    <ItemDetailsWrapper>
-      <Wrapper>
-        <img src={items[0].imageSrc} alt={items[0].name} srcset="" />
-        <Right>
-          <TitleWrapper>
-            <h3>{items[0].name}</h3>
-            <span>Item ID: {items[0]._id}</span>
-          </TitleWrapper>
-          <StockWrapper>
-            <button>{items[0].price} - Add to Cart</button>
-            <span>{items[0].numInStock} items in stock</span>
-          </StockWrapper>
-          <DetailsWrapper>
-            <span>Category: {items[0].category}</span>
-            <span>Body Location: {items[0].body_location}</span>
-            <span>Made By: {items[0].companyId}</span>
-          </DetailsWrapper>
-        </Right>
-      </Wrapper>
-    </ItemDetailsWrapper>
-  );
+  const [ item, setItem] = useState([]);
+  const [ company, setCompany] = useState({});
+  const [ isLoaded, setIsLoaded ] = useState(false);
+
+  useEffect(() => {
+    fetch(`/api/get-items/${itemId}`)
+    .then((res) => res.json())
+    .then((itemDataObj) => {
+      // console.log("got res object from backend & assign it to variable itemsDataObj:", itemDataObj)
+      // console.log("then assign res object data property(array) to variable items at frontend ", itemDataObj.data)
+      setItem(itemDataObj.data)
+      setIsLoaded(true)
+    });
+
+  },[]);
+
+    // Note: the company data doesn't always work. It might be the mount / unmount issue. 
+  useEffect(() => {
+    fetch(`/api/get-companies/${item.companyId}`)  
+    .then((res) => res.json())
+    .then((companyDataObj) => {
+     // console.log("got res object from backend & assign it to variable companyDataObj:", companyDataObj);
+      console.log("then assign res object to variable company at frontend ", companyDataObj.data);
+      setCompany(companyDataObj.data);
+      setIsLoaded(true);
+
+    });
+
+  },[]);
+
+
+  console.log("AAAAAAA", item.companyId, company);
+
+
+  return (    
+    <>
+      {isLoaded &&
+       <>
+         <ItemDetailsWrapper>
+            <Wrapper>
+              <img src={item.imageSrc} alt={item.name} srcset="" />
+              <Right>
+                <TitleWrapper>
+                  <h3>{item.name}</h3>
+                  <span>{item._id}</span>
+                </TitleWrapper>
+                <StockWrapper>
+                  <button>{item.price} - Buy now</button>
+                  <span>In Stock : {item.numInStock}</span>
+                </StockWrapper>
+                <DetailsWrapper>
+                  <span>category: {item.category}</span>
+                  <span>body location: {item.body_location}</span>
+                  <span>made by: {item.companyId}</span>
+                  {/* <span>made by: {company.name}</span> */}
+                </DetailsWrapper>
+              </Right>
+            </Wrapper>
+         </ItemDetailsWrapper>
+       </>
+      }
+   </>
+ )
+
 };
 
 const ItemDetailsWrapper = styled.div`
@@ -68,9 +87,6 @@ const Wrapper = styled.div`
   justify-content: center;
   gap: 30px;
   padding: 20px;
-  background-color: white;
-  border-radius: 10px;
-  max-width: 550px;
 `;
 
 const Left = styled.div``;
@@ -84,14 +100,11 @@ const Right = styled.div`
 
 const TitleWrapper = styled.div`
   max-width: 500px;
-  text-align: center;
-  line-height: 20px;
   h3 {
     font-weight: 600;
     font-size: 26px;
     line-height: 30px;
     margin-top: 0;
-    text-align: center;
   }
 `;
 
@@ -105,8 +118,7 @@ const StockWrapper = styled.div`
     padding: 15px 40px;
     border: none;
     border-radius: 10px;
-    background-color: var(--primary-color);
-    font-family: Jost;
+    background-color: #460fe0;
     color: #fff;
     font-size: 16px;
     font-weight: 600;
