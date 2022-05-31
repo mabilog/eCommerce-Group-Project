@@ -6,6 +6,7 @@ export const GlobalProvider = ({ children }) => {
   const [itemId, setItemId] = useState();
   const [inventoryData, setInventoryData] = useState();
   const [inStock, setInStock] = useState(true);
+  const [login, setLogin] = useState(false);
 
   return (
     <GlobalContext.Provider
@@ -15,7 +16,9 @@ export const GlobalProvider = ({ children }) => {
           inventoryData,
           setInventoryData,
           inStock,
-          setInStock
+          setInStock,
+          login,
+          setLogin
       }}
     >
       {children}

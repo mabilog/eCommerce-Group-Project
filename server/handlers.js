@@ -147,6 +147,59 @@ const buyItem = async (req, res) => {
 
 // orders collection
 // update orders collection and items collection
+
+const createOrder = async (req, res) => {
+  const order = req.body;
+
+  try {
+    const client = new MongoClient(MONGO_URI, options);
+    await client.connect();
+
+    console.log("connecting");
+    const db = client.db(DATABASE_NAME);
+    /**
+     * iterating through the req.body.cartItems array,
+     * finding the corresponding _id,
+     * and updating each document in the items collection
+     */
+    order.cartItems.forEach(async (item) => {
+      const result = await db
+        .collection("items")
+        .updateOne(
+          { _id: parseInt(item.itemId) },
+          { $inc: { numInStock: -parseInt(item.quantity) } }
+        );
+
+      console.log(result);
+    });
+
+    const resultOrder = await db.collection("orders").insertOne(order);
+
+    console.log(resultOrder);
+
+    res.status(200).json({ status: 200, resultOrder, message: "sup" });
+
+    client.close();
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      status: 500,
+      message: "Something went wrong when creating a new order",
+    });
+  }
+};
+
+const updateOrder = async (req, res) => {
+  try {
+    const client = new MongoClient(MONGO_URI, options);
+    await client.connect();
+    console.log("connected!");
+    const db = client.db(DATABASE_NAME);
+    client.close();
+  } catch (err) {
+    console.log(err.stack);
+  }
+};
 const cancelItem = async (req, res) => {
   try {
     const { _id, numInStock, quantity } = req.body;
@@ -191,6 +244,37 @@ const cancelItem = async (req, res) => {
 
 // delete order
 
+const deleteOrder = async (req, res) => {
+  try {
+    const { _id } = req.query;
+    const client = new MongoClient(MONGO_URI, options);
+    await client.connect();
+
+    const db = client.db(DATABASE_NAME);
+
+    /**
+     * Find order and iterate through the cartItems and update the numInStock
+     */
+    const result = await db.collection("Orders").find({ _id });
+    console.log(result);
+
+    // result.deleteCount === 1
+    //   ? sendMessage(res, 200, result, "Order Successfully Cancelled")
+    //   : sendMessage(
+    //       res,
+    //       404,
+    //       null,
+    //       "Something went wrong while cancelling order"
+    //     );
+    client.close();
+  } catch (err) {
+    console.log(err.stack);
+    res.status(500).json({
+      status: 500,
+      message: "Someting went wrong",
+    });
+  }
+};
 module.exports = {
   getCompanies,
   getCompany,
@@ -198,7 +282,9 @@ module.exports = {
   getItem,
 
   // addItem,
+  createOrder,
   buyItem,
   cancelItem,
   // deleteItem,
+  deleteOrder,
 };

@@ -3,7 +3,7 @@ import { useEffect, useContext } from "react";
 import styled from "styled-components";
 
 import { items } from "../data/items";
-const ItemDetails = () => {
+const ItemDetails = ({item}) => {
   /**
    * Angelo's notes:
    *
@@ -28,6 +28,8 @@ const ItemDetails = () => {
     "numInStock": 9,
     "companyId": 19962
    */
+
+    console.log(items)
   return (
     <ItemDetailsWrapper>
       <Wrapper>
@@ -35,16 +37,16 @@ const ItemDetails = () => {
         <Right>
           <TitleWrapper>
             <h3>{items[0].name}</h3>
-            <span>{items[0]._id}</span>
+            <span>Item ID: {items[0]._id}</span>
           </TitleWrapper>
           <StockWrapper>
-            <button>{items[0].price} - Buy now</button>
-            <span>In Stock : {items[0].numInStock}</span>
+            <button>{items[0].price} - Add to Cart</button>
+            <span>{items[0].numInStock} items in stock</span>
           </StockWrapper>
           <DetailsWrapper>
-            <span>category: {items[0].category}</span>
-            <span>body location: {items[0].body_location}</span>
-            <span>made by: {items[0].companyId}</span>
+            <span>Category: {items[0].category}</span>
+            <span>Body Location: {items[0].body_location}</span>
+            <span>Made By: {items[0].companyId}</span>
           </DetailsWrapper>
         </Right>
       </Wrapper>
@@ -66,6 +68,9 @@ const Wrapper = styled.div`
   justify-content: center;
   gap: 30px;
   padding: 20px;
+  background-color: white;
+  border-radius: 10px;
+  max-width: 550px;
 `;
 
 const Left = styled.div``;
@@ -79,11 +84,14 @@ const Right = styled.div`
 
 const TitleWrapper = styled.div`
   max-width: 500px;
+  text-align: center;
+  line-height: 20px;
   h3 {
     font-weight: 600;
     font-size: 26px;
     line-height: 30px;
     margin-top: 0;
+    text-align: center;
   }
 `;
 
@@ -97,7 +105,8 @@ const StockWrapper = styled.div`
     padding: 15px 40px;
     border: none;
     border-radius: 10px;
-    background-color: #460fe0;
+    background-color: var(--primary-color);
+    font-family: Jost;
     color: #fff;
     font-size: 16px;
     font-weight: 600;

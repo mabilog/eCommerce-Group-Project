@@ -6,6 +6,11 @@ export default createGlobalStyle`
    v2.0 | 20110126
    License: none (public domain)
 */
+:root {
+	--primary-color: rgb(116,125,55);
+      --secondary-color: rgb(198,203,164);
+      --page-horizontal-padding: 20px;
+    }
 
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -24,7 +29,7 @@ time, mark, audio, video {
 	padding: 0;
 	border: 0;
 	font-size: 100%;
-	font-family: 'Lato', sans-serif;
+	font-family: 'Jost', sans-serif;
 	vertical-align: baseline;
 }
 /* HTML5 display-role reset for older browsers */
@@ -34,6 +39,7 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	line-height: 1;
+	background-color: var(--secondary-color);
 }
 ol, ul {
 	list-style: none;
