@@ -20,11 +20,9 @@ const sendMessage = (res, status, data, message = "") => {
 
 // get all companies
 const getCompanies = async (req, res) => {
-  // console.log(process.env.MONGO_URI);
   try {
     const client = new MongoClient(MONGO_URI, options);
     await client.connect();
-    console.log("connected!");
 
     const db = client.db(DATABASE_NAME);
     const result = await db.collection("companies").find().toArray();
@@ -40,13 +38,13 @@ const getCompanies = async (req, res) => {
 // get single conpany by name
 const getCompany = async (req, res) => {
   try {
-    const { _id } = req.params;
+    const companyId = parseInt(req.params._id);
     const client = new MongoClient(MONGO_URI, options);
     await client.connect();
-    console.log("connected!");
+
     const db = client.db(DATABASE_NAME);
-    const result = await db.collection("companies").findOne({ _id });
-    console.log(result);
+    const result = await db.collection("companies").findOne({ _id: companyId });
+
     result
       ? sendMessage(res, 200, result, "Found company success!")
       : sendMessage(res, 404, null, "Company not found!");
@@ -62,7 +60,6 @@ const getItems = async (req, res) => {
   try {
     const client = new MongoClient(MONGO_URI, options);
     await client.connect();
-    console.log("connected!");
 
     const db = client.db(DATABASE_NAME);
     const result = await db.collection("items").find().toArray();
@@ -81,7 +78,7 @@ const getItem = async (req, res) => {
   try {
     const { _id } = req.params;
     const idNumber = parseInt(_id);
-    console.log(idNumber);
+
     const client = new MongoClient(MONGO_URI, options);
     await client.connect();
     const db = client.db(DATABASE_NAME);
@@ -106,7 +103,6 @@ const createOrder = async (req, res) => {
     const client = new MongoClient(MONGO_URI, options);
     await client.connect();
 
-    console.log("connecting");
     const db = client.db(DATABASE_NAME);
     /**
      * 1. iterating through the req.body.cartItems array,
@@ -150,7 +146,7 @@ const updateOrder = async (req, res) => {
   try {
     const client = new MongoClient(MONGO_URI, options);
     await client.connect();
-    console.log("connected!");
+
     const db = client.db(DATABASE_NAME);
     client.close();
   } catch (err) {

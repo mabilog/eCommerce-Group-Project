@@ -1,77 +1,66 @@
 import styled from "styled-components";
 import React from "react";
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from "react";
 
 const ItemDetails = () => {
-
   const { itemId } = useParams();
-
-  const [ item, setItem] = useState([]);
-  const [ company, setCompany] = useState();
-  const [ isLoaded, setIsLoaded ] = useState(false);
+  const [item, setItem] = useState();
+  const [company, setCompany] = useState();
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     fetch(`/api/get-items/${itemId}`)
-    .then((res) => res.json())
-    .then((itemDataObj) => {
-      // console.log("got res object from backend & assign it to variable itemsDataObj:", itemDataObj)
-      // console.log("then assign res object data property(array) to variable items at frontend ", itemDataObj.data)
-      setItem(itemDataObj.data)
-      console.log("Hello", item);
-      setIsLoaded(true)
-    });
+      .then((res) => res.json())
+      .then((itemDataObj) => {
+        setItem(itemDataObj.data);
+      });
+  }, [itemId]);
 
-  },[]);
-
-    // Note: the company data doesn't always work. It might be the mount / unmount issue. 
   useEffect(() => {
-    fetch(`/api/get-companies/${item.companyId}`)  
-    .then((res) => res.json())
-    .then((companyDataObj) => {
-     // console.log("got res object from backend & assign it to variable companyDataObj:", companyDataObj);
-      console.log("then assign res object to variable company at frontend ", companyDataObj.data);
-      setCompany(companyDataObj.data);
-      setIsLoaded(true);
+    if (item)
+      fetch(`/api/get-companies/${item.companyId}`)
+        .then((res) => res.json())
+        .then((companyDataObj) => {
+          setCompany(companyDataObj.data);
+          setIsLoaded(true);
+        });
+  }, [item]);
 
-    });
-
-  },[]);
-
-
-  console.log("AAAAAAA", item.companyId, company);
-
-
-  return (    
+  return (
     <>
-      {isLoaded &&
-       <>
-         <ItemDetailsWrapper>
+      {isLoaded && (
+        <>
+          <ItemDetailsWrapper>
             <Wrapper>
-              <img src={item.imageSrc} alt={item.name} srcset="" />
+              <img src={item.imageSrc} alt={item.name} srcSet="" />
               <Right>
                 <TitleWrapper>
                   <h3>{item.name}</h3>
                   <span>Item ID: {item._id}</span>
                 </TitleWrapper>
-                <StockWrapper>{item.numInStock <= 0 ? <OOSButton>Out of stock</OOSButton> : 
-                <div><CartButton>{item.price} - Add to Cart</CartButton> 
-                <div>{item.numInStock} items in stock</div></div>}
+                <StockWrapper>
+                  {item.numInStock <= 0 ? (
+                    <OOSButton>Out of stock</OOSButton>
+                  ) : (
+                    <div>
+                      <CartButton>{item.price} - Add to Cart</CartButton>
+                      <div>{item.numInStock} items in stock</div>
+                    </div>
+                  )}
                 </StockWrapper>
                 <DetailsWrapper>
                   <span>Category: {item.category}</span>
                   <span>Body Location: {item.body_location}</span>
-                  <span>Made By: {item.companyId}</span>
-                  {/* <span>made by: {company.name}</span> */}
+                  <span>Made By: {company.name}</span>
                 </DetailsWrapper>
               </Right>
             </Wrapper>
-         </ItemDetailsWrapper>
-       </>
-      }
-   </>
- )
-
+          </ItemDetailsWrapper>
+        </>
+      )}
+    </>
+  );
 };
 
 const ItemDetailsWrapper = styled.div`
@@ -121,17 +110,17 @@ const StockWrapper = styled.div`
   gap: 10px;
   text-align: center;
   line-height: 30px;
-  `;
+`;
 
-  const CartButton = styled.button`
-    padding: 15px 40px;
-    border: none;
-    border-radius: 10px;
-    background-color: var(--primary-color);
-    font-family: Jost;
-    color: #fff;
-    font-size: 16px;
-    font-weight: 600;
+const CartButton = styled.button`
+  padding: 15px 40px;
+  border: none;
+  border-radius: 10px;
+  background-color: var(--primary-color);
+  font-family: Jost;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
 `;
 
 const DetailsWrapper = styled.div`
@@ -141,15 +130,15 @@ const DetailsWrapper = styled.div`
 `;
 
 const OOSButton = styled.button`
-padding: 15px 40px;
-    border: none;
-    border-radius: 10px;
-    color: grey;
-    background-color: lightgrey;
-    font-family: Jost;
-    color: #fff;
-    font-size: 16px;
-    font-weight: 600;
-`
+  padding: 15px 40px;
+  border: none;
+  border-radius: 10px;
+  color: grey;
+  background-color: lightgrey;
+  font-family: Jost;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+`;
 
 export default ItemDetails;
