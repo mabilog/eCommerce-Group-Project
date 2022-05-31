@@ -1,7 +1,12 @@
+// yarn install
+// yarn add react-router-dom
+//yarn add styled-components
+// yarn start
+
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import GlobalStyles from "./GlobalStyles";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./Header";
 import Home from "./Home";
 import Cart from "./Cart";
@@ -14,17 +19,19 @@ function App() {
       <BrowserRouter>
         <Header />
         <ComponentWrapper>
-          <Switch>
-            <Route exact path="/">
-              <Home />
-            </Route>
-            <Route exact path="/items/:itemId">
-              <ItemDetails />
-            </Route>
-            <Route path="/cart/:orderId">
+          <Routes>
+            <Route exact path="/" element={<Home />} />
+              {/* <Home />
+            </Route> */}
+
+             <Route exact path="/items/:itemId" element={<ItemDetails />} />
+              {/* <ItemDetails />
+            </Route> */}
+
+            {/*<Route path="/cart/:orderId">
               <Cart />
-            </Route>
-          </Switch>
+            </Route> */}
+          </Routes>
         </ComponentWrapper>
       </BrowserRouter>
     </AppWrapper>
