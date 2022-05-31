@@ -1,13 +1,16 @@
 import styled from "styled-components";
-import React from "react";
+import { useContext } from "react";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { GlobalContext } from "./GlobalContext";
 
 const ItemDetails = () => {
   const { itemId } = useParams();
   const [item, setItem] = useState();
   const [company, setCompany] = useState();
   const [isLoaded, setIsLoaded] = useState(false);
+
+  const { cartItems, setCartItems } = useContext(GlobalContext);
 
   useEffect(() => {
     fetch(`/api/get-items/${itemId}`)
@@ -44,7 +47,11 @@ const ItemDetails = () => {
                     <OOSButton>Out of stock</OOSButton>
                   ) : (
                     <div>
-                      <CartButton>{item.price} - Add to Cart</CartButton>
+                      <CartButton
+                        onClick={() => setCartItems([...cartItems, item._id])}
+                      >
+                        {item.price} - Add to Cart
+                      </CartButton>
                       <div>{item.numInStock} items in stock</div>
                     </div>
                   )}
@@ -82,7 +89,6 @@ const Wrapper = styled.div`
   max-width: 550px;
 `;
 
-const Left = styled.div``;
 const Right = styled.div`
   height: 100%;
   display: flex;
@@ -121,6 +127,7 @@ const CartButton = styled.button`
   color: #fff;
   font-size: 16px;
   font-weight: 600;
+  cursor: pointer;
 `;
 
 const DetailsWrapper = styled.div`

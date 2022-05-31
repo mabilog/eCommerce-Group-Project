@@ -1,4 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./components/App";
-ReactDOM.render(<App />, document.getElementById("root"));
+import GlobalProvider from "./components/GlobalContext";
+
+ReactDOM.render(
+  <GlobalProvider>
+    <App />
+  </GlobalProvider>,
+  document.getElementById("root")
+);

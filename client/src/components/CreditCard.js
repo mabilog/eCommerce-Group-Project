@@ -1,32 +1,167 @@
+import { useEffect, useContext } from "react";
+import { GlobalContext } from "./GlobalContext";
 import styled from "styled-components";
 
 const CreditCard = () => {
+  const {
+    cardNum,
+    setCardNum,
+    cardName,
+    setCardName,
+    cardExp,
+    setCardExp,
+    cardSec,
+    setCardSec,
+    resetCreditCardInfo,
+  } = useContext(GlobalContext);
+
+  useEffect(() => {
+    resetCreditCardInfo();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
-    <form method="POST">
-      <input
-        type="number"
-        placeholder="Card Number"
-        name="credit-card-number"
-        required
-      />
-      <input
-        type="text"
-        name="credit-card-holder-name"
-        placeholder="Name on Card"
-        required
-      />
-      <input
-        type="number"
-        name="expiration-date"
-        placeholder="Expiration date"
-        min="4"
-        max="4"
-        required
-      />
-      <input type="number" name="security-code" min="3" max="3" required />
-      <button type="submit">Pay now</button>
-    </form>
+    <Wrapper>
+      <FormWrapper method="POST" onSubmit={() => {}}>
+        <TopWrapper>
+          <h2>Payment</h2>
+          <p>All transactions are secure and encrypted (no theyre not)</p>
+        </TopWrapper>
+        <InputWrapper>
+          <input
+            type="number"
+            placeholder="Card Number"
+            name="credit-card-number"
+            id="input-card-number"
+            required
+            onChange={(e) => setCardNum(e.target.value)}
+          />
+          <input
+            type="text"
+            name="credit-card-holder-name"
+            placeholder="Name on Card"
+            id="input-card-name"
+            required
+            onChange={(e) => setCardName(e.target.value)}
+          />
+          <SecurityWrapper>
+            <input
+              type="number"
+              name="expiration-date"
+              placeholder="Expiration date"
+              id="input-card-number"
+              required
+              onChange={(e) => setCardExp(e.target.value)}
+            />
+            <input
+              type="number"
+              name="security-code"
+              id="input-card-sec"
+              placeholder="Security Code"
+              required
+              onChange={(e) => setCardSec(e.target.value)}
+            />
+          </SecurityWrapper>
+        </InputWrapper>
+        <ButtonWrapper>
+          <SubmitBtn
+            type="submit"
+            disabled={
+              cardNum === undefined ||
+              cardName === undefined ||
+              cardExp === undefined ||
+              cardSec === undefined
+            }
+          >
+            Check out
+          </SubmitBtn>
+        </ButtonWrapper>
+      </FormWrapper>
+    </Wrapper>
   );
 };
+const Wrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+`;
+const TopWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-bottom: 20px;
+`;
+const FormWrapper = styled.form`
+  display: flex;
+  flex-direction: column;
+  height: 700px;
+  width: 600px;
+
+  input {
+    padding-left: 15px;
+    border: 1px solid #888;
+    border-radius: 15px;
+    line-height: 36px;
+    font-size: 18px;
+  }
+  // Removing some input type="number" styling
+  /* Chrome, Safari, Edge, Opera */
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* Firefox */
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
+`;
+const InputWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 10px;
+  padding: 20px 0;
+  border-top: 2px dotted #999;
+  border-bottom: 2px dotted #999;
+`;
+
+const SecurityWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: center;
+  gap: 10px;
+  input {
+    width: 100%;
+  }
+`;
+
+const ButtonWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 20px;
+`;
+
+const SubmitBtn = styled.button`
+  font-size: 20px;
+  padding: 20px 40px;
+  border-radius: 30px;
+  border: none;
+  background-color: var(--primary-color);
+  color: #fff;
+  cursor: pointer;
+  &:hover {
+    background-color: #444920;
+  }
+  &:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+`;
 
 export default CreditCard;

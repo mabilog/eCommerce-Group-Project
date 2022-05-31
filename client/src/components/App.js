@@ -11,6 +11,8 @@ import Header from "./Header";
 import Home from "./Home";
 import Cart from "./Cart";
 import ItemDetails from "./ItemDetails";
+import CreditCard from "./CreditCard";
+import Orders from "./Orders";
 
 function App() {
   return (
@@ -21,18 +23,10 @@ function App() {
         <ComponentWrapper>
           <Routes>
             <Route exact path="/" element={<Home />} />
-            {/* <Home />
-            </Route> */}
-
-            <Route exact path="/items/:itemId" element={<ItemDetails />} />
-
-            {/* <ItemDetails />
-            </Route> */}
-
-            {/*<Route path="/cart/:orderId">
-              <Cart />
-            </Route> */}
-            <Route exact path="/cart/:orderId" element={<Cart />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/checkout" element={<CreditCard />} />
+            <Route path="/items/:itemId" element={<ItemDetails />} />
+            <Route path="/orders" element={<Orders />} />
           </Routes>
         </ComponentWrapper>
       </BrowserRouter>
