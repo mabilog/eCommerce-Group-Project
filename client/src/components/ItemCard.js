@@ -17,7 +17,8 @@ const ItemCard = ({ item }) => {
   const addToCart = (_id, e) => {
     e.preventDefault();
     console.log(_id);
-    if (!cartItems.includes(_id)) setCartItems([...cartItems, _id]);
+    if (!cartItems.includes(_id))
+      setCartItems([...cartItems, { _id, quantity: 1 }]);
   };
 
   return (
@@ -77,7 +78,6 @@ const Wrapper = styled.div`
   align-items: center;
   align-content: center;
   margin: auto;
-  
 `;
 
 const ItemImg = styled.img`

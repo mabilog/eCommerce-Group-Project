@@ -33,8 +33,10 @@ const ItemDetails = () => {
   const addToCart = (_id, e) => {
     e.preventDefault();
     console.log(_id);
-    if (!cartItems.includes(_id)) setCartItems([...cartItems, _id]);
+    if (!cartItems.includes(_id))
+      setCartItems([...cartItems, { _id, quantity: 1 }]);
   };
+
   return (
     <>
       {isLoaded && (
@@ -52,7 +54,7 @@ const ItemDetails = () => {
                     <OOSButton>Out of stock</OOSButton>
                   ) : (
                     <div>
-                      {cartItems.includes(item._id) ? (
+                      {cartItems.find((i) => i._id === item.id) ? (
                         <CartButton disabled>Added to Cart!</CartButton>
                       ) : (
                         <CartButton onClick={(e) => addToCart(item._id, e)}>
