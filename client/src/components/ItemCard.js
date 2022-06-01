@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { GlobalContext } from "./GlobalContext";
 
 const ItemCard = ({ item }) => {
-  const { cartItems, setCartItems } = useContext(GlobalContext);
+  const { addToCart } = useContext(GlobalContext);
 
   const onMouseEnterHandler = (e) => {
     e.target.style.transform = "scale(1.06)";
@@ -12,13 +12,6 @@ const ItemCard = ({ item }) => {
 
   const onMouseLeaveHandler = (e) => {
     e.target.style.transform = "scale(1)";
-  };
-
-  const addToCart = (_id, e) => {
-    e.preventDefault();
-    console.log(_id);
-    if (!cartItems.includes(_id))
-      setCartItems([...cartItems, { _id, quantity: 1 }]);
   };
 
   return (
@@ -36,15 +29,10 @@ const ItemCard = ({ item }) => {
           {item.numInStock <= 0 ? (
             <OOSButton>Out of stock</OOSButton>
           ) : (
-            // <CartButton>Add to Cart</CartButton>
             <div>
-              {cartItems.includes(item._id) ? (
-                <CartButton disabled>Added to Cart!</CartButton>
-              ) : (
-                <CartButton onClick={(e) => addToCart(item._id, e)}>
-                  {item.price} - Add to Cart
-                </CartButton>
-              )}
+              <CartButton onClick={() => addToCart(item._id)}>
+                {item.price} - Add to Cart
+              </CartButton>
             </div>
           )}
         </Wrapper>
@@ -110,7 +98,7 @@ const Divider = styled.hr`
 `;
 
 const CartButton = styled.button`
-   padding: 15px 35px;
+  padding: 15px 35px;
   border: 0px;
   color: white;
   background-color: var(--primary-color);
@@ -127,7 +115,7 @@ const CartButton = styled.button`
   }
 `;
 const OOSButton = styled.button`
-   padding: 15px 35px;
+  padding: 15px 35px;
   border: 0px;
   color: grey;
   background-color: lightgrey;
