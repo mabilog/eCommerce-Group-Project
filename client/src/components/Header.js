@@ -18,7 +18,7 @@ const Header = () => {
             <div>Categories</div>
             <Dropdown>
               <DropdownContent>
-              <ShopAll to="/shop">All Products</ShopAll>
+                <ShopAll to="/shop">All Products</ShopAll>
                 {categories?.map((category) => {
                   return (
                     <CatLink to={`/category/${category}`} key={category}>
@@ -32,7 +32,7 @@ const Header = () => {
           <SearchBar />
           <Right>
             <div>Login</div>
-            <NavLinks to="/cart/:orderid">
+            <NavLinks to="/cart">
               <AiOutlineShopping />
               <span>{cartItems.length}</span>
             </NavLinks>
