@@ -41,10 +41,6 @@ export const GlobalProvider = ({ children }) => {
       });
   }, []);
 
-  useEffect(() => {
-    console.log(categories);
-  }, [categories]);
-
   return (
     <GlobalContext.Provider
       value={{

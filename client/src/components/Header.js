@@ -20,7 +20,9 @@ const Header = () => {
               <DropdownContent>
                 {categories?.map((category) => {
                   return (
-                    <CatLink to={`/category/${category}`}>{category}</CatLink>
+                    <CatLink to={`/category/${category}`} key={category}>
+                      {category}
+                    </CatLink>
                   );
                 })}
               </DropdownContent>

@@ -4,7 +4,6 @@ import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 const Categories = () => {
   const { categories } = useContext(GlobalContext);
-  console.log(categories);
   return (
     <div>
       {categories ? (
