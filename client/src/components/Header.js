@@ -15,9 +15,10 @@ const Header = () => {
             <h1>Dream Team Wearables</h1>
           </LogoWrapper>
           <DropdownWrapper>
-            <ShopAll to="/shop">Shop</ShopAll>
+            <div>Categories</div>
             <Dropdown>
               <DropdownContent>
+              <ShopAll to="/shop">All Products</ShopAll>
                 {categories?.map((category) => {
                   return (
                     <CatLink to={`/category/${category}`} key={category}>
@@ -45,8 +46,8 @@ const Header = () => {
 const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  padding-left: 20px;
-  padding-right: 20px;
+  padding-left: 40px;
+  padding-right: 40px;
   align-items: center;
   height: 50px;
   margin: 0px;
@@ -54,6 +55,7 @@ const Wrapper = styled.div`
   top: 0;
   background-color: #ffffff;
   box-shadow: 0px 5px 16px -5px rgba(0, 0, 0, 0.5);
+  z-index: 100;
 `;
 const NavLinks = styled(NavLink)`
   display: flex;
@@ -79,10 +81,13 @@ const Right = styled.div`
 const DropdownWrapper = styled.div`
   position: relative;
   display: inline-block;
-  font-size: 20px;
-  z-index: 10;
+  padding-left: 30px;
+  width: 165px;
+  font-size: 18px;
+  z-index: 100;
   &:hover > div {
     display: block;
+    z-index: 99;
   }
 `;
 
@@ -90,10 +95,18 @@ const ShopAll = styled(NavLink)`
   /* background-color: #f44334; */
   text-decoration: none;
   color: #000;
+  z-index: 99;
+  &:hover {
+    font-weight: bold;
+  }
 `;
 const CatLink = styled(Link)`
   text-decoration: none;
   color: #000;
+  z-index: 99;
+  &:hover {
+    font-weight: bold;
+  }
 `;
 const Dropdown = styled.div`
   display: none;
@@ -104,8 +117,10 @@ const DropdownContent = styled.div`
   display: flex;
   flex-direction: column;
   background-color: #fff;
+  opacity: 0.9;
   padding: 20px;
   gap: 10px;
+  z-index: 10;
 `;
 /* Need to add some top padding to the page content to prevent sudden quick movement //in HOME?  */
 
