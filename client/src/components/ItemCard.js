@@ -109,7 +109,7 @@ const Divider = styled.hr`
 `;
 
 const CartButton = styled.button`
-  width: 120px;
+  width: 160px;
   height: 40px;
   border: 0px;
   color: white;
@@ -127,7 +127,7 @@ const CartButton = styled.button`
   }
 `;
 const OOSButton = styled.button`
-  width: 120px;
+  width: 160px;
   height: 40px;
   border: 0px;
   color: grey;
