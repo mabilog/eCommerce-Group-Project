@@ -48,7 +48,7 @@ const Searchbar = () => {
             handleFind(searchItems);
           }}
         >
-          search
+          Search
         </Button>
 
         {items && searchItems.length > 2 && (
@@ -102,6 +102,7 @@ const Input = styled.input`
   font-size: 18px;
   position: relative;
   padding: 10px;
+  font-family: 'Jost';
   :focus {
     outline: none;
     border-color: rgb(116, 125, 55);
@@ -111,13 +112,17 @@ const Input = styled.input`
 
 const Button = styled.button`
   border: none;
-  border-radius: 7px;
-  height: 38px;
-  width: 52px;
+  border-radius: 5px;
+  /* height: 38px;
+  width: 52px; */
+  padding: 8px 20px;
+  margin-top: 1px;
   margin-left: 3px;
+  font-family: 'Jost';
+  font-size: 14px;
   position: absolute;
   color: white;
-  background-color: rgb(198, 203, 164);
+  background-color: var(--primary-color);
 `;
 
 const ListedItems = styled.ul`
