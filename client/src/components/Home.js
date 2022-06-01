@@ -5,6 +5,7 @@ import { useContext } from "react";
 import HeaderImg from "./HeaderImg";
 import { GlobalContext } from "./GlobalContext";
 
+import Categories from "./Categories";
 const Home = () => {
   const { items } = useContext(GlobalContext);
 
@@ -23,7 +24,8 @@ const Home = () => {
   return (
     <>
       <HeaderImg />
-      <ListingGrid items={items} />
+      <Categories />
+      {/* <ListingGrid items={items} /> */}
       {/* {isLoaded && <ListingGrid itemList={Object.values(items)} />} */}
     </>
   );
