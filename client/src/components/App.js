@@ -3,7 +3,7 @@
 //yarn add styled-components
 // yarn start
 
-import { useState, useEffect } from "react";
+// import { useState, useEffect } from "react";
 import styled from "styled-components";
 import GlobalStyles from "./GlobalStyles";
 import { BrowserRouter, Routes, Route } from "react-router-dom";

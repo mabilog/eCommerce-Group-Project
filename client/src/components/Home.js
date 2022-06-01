@@ -1,4 +1,4 @@
-import styled from "styled-components";
+// import styled from "styled-components";
 import ListingGrid from "./ListingGrid";
 //import {items} from "../data/items"
 import { useEffect, useState } from "react";
@@ -12,14 +12,6 @@ const Home = (props) => {
     fetch("/api/get-items")
       .then((res) => res.json())
       .then((itemsDataObj) => {
-        console.log(
-          "got res object from backend & assign it to variable itemsDataObj:",
-          itemsDataObj
-        );
-        console.log(
-          "then assign res object data property(array) to variable items at frontend ",
-          itemsDataObj.data
-        );
         setItems(itemsDataObj.data);
         setIsLoaded(true);
       });
@@ -28,11 +20,7 @@ const Home = (props) => {
   return (
     <>
       <HeaderImg />
-      {isLoaded && (
-        <>
-          <ListingGrid itemList={Object.values(items)} />
-        </>
-      )}
+      {isLoaded && <ListingGrid itemList={Object.values(items)} />}
     </>
   );
 };
