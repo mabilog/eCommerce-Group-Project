@@ -17,13 +17,6 @@ const {
   getCategories,
   getCategory,
   // below are the new functions for Sidebar navigations
-  shopByFitness,
-  shopByMedical,
-  shopByLifestyle,
-  shopByEntertainment,
-  shopByGaming,
-  shopByIndustrial,
-  shopByPetsandAnimals,
 
   shopByArms,
   shopByWaist,
@@ -72,14 +65,6 @@ express()
 
   .get("/api/get-categories", getCategories)
   .get("/api/get-category/:category", getCategory)
-
-  .get("/api/get-items-fitness", shopByFitness)
-  .get("/api/get-items-medical", shopByMedical)
-  .get("/api/get-items-lifestyle", shopByLifestyle)
-  .get("/api/get-items-entertainment", shopByEntertainment)
-  .get("/api/get-items-gaming", shopByGaming)
-  .get("/api/get-items-industrial", shopByIndustrial)
-  .get("/api/get-items-petsandanimals", shopByPetsandAnimals)
 
   .get("/api/get-items-arms", shopByArms)
   .get("/api/get-items-Waist", shopByWaist)
