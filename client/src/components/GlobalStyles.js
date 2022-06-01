@@ -8,7 +8,7 @@ export default createGlobalStyle`
 */
 :root {
 	--primary-color: rgb(116,125,55);
-      --secondary-color: rgb(198,203,164);
+      --secondary-color: #EBE7DF;
       --page-horizontal-padding: 20px;
     }
 

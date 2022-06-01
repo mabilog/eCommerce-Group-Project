@@ -93,7 +93,6 @@ const Wrapper = styled.div`
   gap: 30px;
   padding: 20px;
   background-color: white;
-  border-radius: 10px;
   max-width: 550px;
 `;
 
@@ -129,7 +128,7 @@ const StockWrapper = styled.div`
 const CartButton = styled.button`
   padding: 15px 40px;
   border: none;
-  border-radius: 10px;
+  border-radius: 5px;
   background-color: var(--primary-color);
   font-family: Jost;
   color: #fff;
