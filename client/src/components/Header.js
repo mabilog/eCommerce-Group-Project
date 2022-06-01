@@ -1,9 +1,12 @@
-// import Logo from "./Logo";
+import { useContext } from "react";
+import { GlobalContext } from "./GlobalContext";
 import SearchBar from "./SearchBar";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
+import { AiOutlineShopping } from "react-icons/ai";
 
 const Header = () => {
+  const { cartItems } = useContext(GlobalContext);
   return (
     <>
       <div>
@@ -13,10 +16,13 @@ const Header = () => {
           </LogoWrapper>
 
           <SearchBar />
-          <div>
+          <Right>
             <div>Login</div>
-            <NavLinks to="/cart/:orderid">Cart</NavLinks>
-          </div>
+            <NavLinks to="/cart/:orderid">
+              <AiOutlineShopping />
+              <span>{cartItems.length}</span>
+            </NavLinks>
+          </Right>
         </Wrapper>
       </div>
     </>
@@ -37,10 +43,13 @@ const Wrapper = styled.div`
   box-shadow: 0px 5px 16px -5px rgba(0, 0, 0, 0.5);
 `;
 const NavLinks = styled(NavLink)`
+  display: flex;
+  align-items: center;
   text-decoration: none;
-
-  &:hover {
-    text-decoration: underline;
+  color: #000;
+  font-size: 26px;
+  span {
+    font-size: 16px;
   }
 `;
 const LogoWrapper = styled(NavLink)`
@@ -48,6 +57,11 @@ const LogoWrapper = styled(NavLink)`
   color: black;
 `;
 
+const Right = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+`;
 /* Need to add some top padding to the page content to prevent sudden quick movement //in HOME?  */
 
 export default Header;
