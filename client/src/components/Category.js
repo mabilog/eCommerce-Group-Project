@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ListingGrid from "./ListingGrid";
+import styled from "styled-components";
 
 const Category = () => {
   const { category } = useParams();
@@ -11,7 +12,15 @@ const Category = () => {
       .then((data) => setItems(data.data));
   }, [category]);
 
-  return <>{category ? <ListingGrid items={items} /> : <span>loading</span>}</>;
+  return <>
+  {category ? <><Header>{category} Wearables</Header>
+  <ListingGrid items={items} /></> : <span>loading</span>}</>;
 };
 
+const Header = styled.h1`
+font-size: 36px;
+text-align: center;
+padding-top: 40px;
+padding-bottom: 20px;
+`;
 export default Category;
