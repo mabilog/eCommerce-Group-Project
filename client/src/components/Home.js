@@ -1,10 +1,13 @@
 // import styled from "styled-components";
 import ListingGrid from "./ListingGrid";
 //import {items} from "../data/items"
-import { useEffect, useState } from "react";
+import { useContext } from "react";
 import HeaderImg from "./HeaderImg";
+import { GlobalContext } from "./GlobalContext";
 
-const Home = (props) => {
+const Home = () => {
+  const { items } = useContext(GlobalContext);
+
   // const [items, setItems] = useState([]);
   // const [isLoaded, setIsLoaded] = useState(false);
 
@@ -20,7 +23,7 @@ const Home = (props) => {
   return (
     <>
       <HeaderImg />
-      <ListingGrid />
+      <ListingGrid items={items} />
       {/* {isLoaded && <ListingGrid itemList={Object.values(items)} />} */}
     </>
   );
