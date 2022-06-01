@@ -19,10 +19,26 @@ const CreditCard = () => {
     resetCreditCardInfo();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
+  const handleOrderSubmit = (e) => {
+    e.preventDefault();
+    const postbody = {};
+    // fetch("/api/create-order", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify(postbody),
+    // });
+    console.log(postbody);
+  };
   return (
     <Wrapper>
-      <FormWrapper method="POST" onSubmit={() => {}}>
+      <FormWrapper
+        method="POST"
+        onSubmit={(e) => {
+          handleOrderSubmit(e);
+        }}
+      >
         <TopWrapper>
           <h2>Payment</h2>
           <p>All transactions are secure and encrypted (no theyre not)</p>

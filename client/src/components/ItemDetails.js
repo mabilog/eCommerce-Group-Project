@@ -30,6 +30,11 @@ const ItemDetails = () => {
         });
   }, [item]);
 
+  const addToCart = (_id, e) => {
+    e.preventDefault();
+    console.log(_id);
+    if (!cartItems.includes(_id)) setCartItems([...cartItems, _id]);
+  };
   return (
     <>
       {isLoaded && (
@@ -47,11 +52,14 @@ const ItemDetails = () => {
                     <OOSButton>Out of stock</OOSButton>
                   ) : (
                     <div>
-                      <CartButton
-                        onClick={() => setCartItems([...cartItems, item._id])}
-                      >
-                        {item.price} - Add to Cart
-                      </CartButton>
+                      {cartItems.includes(item._id) ? (
+                        <CartButton disabled>Added to Cart!</CartButton>
+                      ) : (
+                        <CartButton onClick={(e) => addToCart(item._id, e)}>
+                          {item.price} - Add to Cart
+                        </CartButton>
+                      )}
+
                       <div>{item.numInStock} items in stock</div>
                     </div>
                   )}
@@ -128,6 +136,11 @@ const CartButton = styled.button`
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
+
+  &:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
 `;
 
 const DetailsWrapper = styled.div`
