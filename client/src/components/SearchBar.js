@@ -8,7 +8,7 @@ const Searchbar = () => {
   // const { itemId, setItemId } = useContext(GlobalContext);
 
   const [items, setItems] = useState();
-  const [searchItems, setSearchItems] = useState();
+  const [searchItems, setSearchItems] = useState("");
 
   const handleKeyUp = (e) => {
     // fetch data from backend for titles of items in searchbar
@@ -51,36 +51,43 @@ const Searchbar = () => {
           search
         </Button>
 
-        {items && (
+        {items && searchItems.length > 2 && (
           <ListedItems>
-            {items?.map((item) => {
-              return (
-                <ItemsDropdown
-                  key={item._id}
-                  onClick={() => {
-                    handleSuggestions(item);
-                  }}
-                >
-                  <span>
-                    {item.name.slice(
-                      0,
-                      item.name
-                        .toLowerCase()
-                        .indexOf(searchItems.toLowerCase()) + searchItems.length
-                    )}
-
-                    <Suggestions>
+            {items
+              ?.filter((item) => {
+                return item.name
+                  .toLowerCase()
+                  .includes(searchItems.toLowerCase());
+              })
+              .map((item) => {
+                return (
+                  <ItemsDropdown
+                    key={item._id}
+                    onClick={() => {
+                      handleSuggestions(item);
+                    }}
+                  >
+                    <span>
                       {item.name.slice(
+                        0,
                         item.name
                           .toLowerCase()
                           .indexOf(searchItems.toLowerCase()) +
                           searchItems.length
                       )}
-                    </Suggestions>
-                  </span>
-                </ItemsDropdown>
-              );
-            })}
+
+                      <Suggestions>
+                        {item.name.slice(
+                          item.name
+                            .toLowerCase()
+                            .indexOf(searchItems.toLowerCase()) +
+                            searchItems.length
+                        )}
+                      </Suggestions>
+                    </span>
+                  </ItemsDropdown>
+                );
+              })}
           </ListedItems>
         )}
       </div>
@@ -89,40 +96,40 @@ const Searchbar = () => {
 };
 
 const Input = styled.input`
-  border-radius: 7px;
-  height: 15px;
-  width: 500px;
-  font-size: 18px;
-  position: relative;
-  padding:10px;
-  :focus {
-  outline: none;
-  border-color: rgb(116,125,55);
-  box-shadow: 0 0 2px rgb(116,125,55);
-  }
+  border-radius: 7px;
+  height: 15px;
+  width: 500px;
+  font-size: 18px;
+  position: relative;
+  padding: 10px;
+  :focus {
+    outline: none;
+    border-color: rgb(116, 125, 55);
+    box-shadow: 0 0 2px rgb(116, 125, 55);
+  }
 `;
 
 const Button = styled.button`
-    border: none;
-    border-radius: 7px;
-    height: 38px;
-    width: 52px;
-    margin-left: 3px;
-    position: absolute;
-    color: white;
-    background-color: rgb(198, 203, 164);
+  border: none;
+  border-radius: 7px;
+  height: 38px;
+  width: 52px;
+  margin-left: 3px;
+  position: absolute;
+  color: white;
+  background-color: rgb(198, 203, 164);
 `;
 
 const ListedItems = styled.ul`
-    border-radius: 5px;
-    height: 300px;
-    width: 500px;
-    display: column;
-    padding: 10px;
-    position: absolute;
-    background: white;
-    color: black;
-    overflow-y: auto;
+  border-radius: 5px;
+  height: 300px;
+  width: 500px;
+  display: column;
+  padding: 10px;
+  position: absolute;
+  background: white;
+  color: black;
+  overflow-y: auto;
 `;
 
 const Suggestions = styled.span`
@@ -130,13 +137,13 @@ const Suggestions = styled.span`
 `;
 
 const ItemsDropdown = styled.li`
-  border-radius: 7px;
-  font-size:14px;
-  padding:10px;
-  :hover {
-    cursor: pointer;
-    background-color: #e4e6e3;
-  }
+  border-radius: 7px;
+  font-size: 14px;
+  padding: 10px;
+  :hover {
+    cursor: pointer;
+    background-color: #e4e6e3;
+  }
 `;
 
 export default Searchbar;
