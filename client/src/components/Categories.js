@@ -40,8 +40,8 @@ const CategoryCard = styled.div`
   justify-content: center;
   width: 300px;
   height: 200px;
-  background-color: #ddd;
-  border-radius: 10px;
+  background-color: #fff;
+  /* border-radius: 10px; */
   span {
     font-size: 26px;
   }
@@ -52,7 +52,7 @@ const ShopCategory = styled(NavLink)`
   text-decoration: none;
   background-color: var(--primary-color);
   color: #fff;
-  padding: 10px 20px;
+  padding: 15px 35px;
   border-radius: 5px;
 `;
 export default Categories;

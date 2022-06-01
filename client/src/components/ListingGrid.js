@@ -14,7 +14,9 @@ const ListingGrid = ({ items }) => {
 const Wrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
-  margin: 20px auto;
+  margin-left: 90px;
+  margin-right: 90px;
+  margin-top: 50px;
 `;
 
 export default ListingGrid;
