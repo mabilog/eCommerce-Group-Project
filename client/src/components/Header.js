@@ -2,11 +2,11 @@ import { useContext } from "react";
 import { GlobalContext } from "./GlobalContext";
 import SearchBar from "./SearchBar";
 import styled from "styled-components";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import { AiOutlineShopping } from "react-icons/ai";
 
 const Header = () => {
-  const { cartItems } = useContext(GlobalContext);
+  const { cartItems, categories } = useContext(GlobalContext);
   return (
     <>
       <div>
@@ -14,7 +14,18 @@ const Header = () => {
           <LogoWrapper to="/">
             <h1>Dream Team Wearables</h1>
           </LogoWrapper>
-
+          <DropdownWrapper>
+            <ShopAll to="/shop">Shop</ShopAll>
+            <Dropdown>
+              <DropdownContent>
+                {categories?.map((category) => {
+                  return (
+                    <CatLink to={`/category/${category}`}>{category}</CatLink>
+                  );
+                })}
+              </DropdownContent>
+            </Dropdown>
+          </DropdownWrapper>
           <SearchBar />
           <Right>
             <div>Login</div>
@@ -60,6 +71,38 @@ const LogoWrapper = styled(NavLink)`
 const Right = styled.div`
   display: flex;
   align-items: center;
+  gap: 10px;
+`;
+
+const DropdownWrapper = styled.div`
+  position: relative;
+  display: inline-block;
+  font-size: 20px;
+  z-index: 10;
+  &:hover > div {
+    display: block;
+  }
+`;
+
+const ShopAll = styled(NavLink)`
+  /* background-color: #f44334; */
+  text-decoration: none;
+  color: #000;
+`;
+const CatLink = styled(Link)`
+  text-decoration: none;
+  color: #000;
+`;
+const Dropdown = styled.div`
+  display: none;
+  position: absolute;
+  /* height: 100px; */
+`;
+const DropdownContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  padding: 20px;
   gap: 10px;
 `;
 /* Need to add some top padding to the page content to prevent sudden quick movement //in HOME?  */

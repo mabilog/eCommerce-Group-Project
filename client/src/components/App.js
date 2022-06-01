@@ -15,6 +15,7 @@ import CreditCard from "./CreditCard";
 import Orders from "./Orders";
 import Categories from "./Categories";
 import Category from "./Category";
+import Shop from "./Shop";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
             <Route path="/orders" element={<Orders />} />
             <Route path="/categories" element={<Categories />} />
             <Route path="/category/:category" element={<Category />} />
+            <Route path="/shop" element={<Shop />} />
           </Routes>
         </ComponentWrapper>
       </BrowserRouter>

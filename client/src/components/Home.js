@@ -1,4 +1,4 @@
-// import styled from "styled-components";
+import styled from "styled-components";
 import ListingGrid from "./ListingGrid";
 //import {items} from "../data/items"
 import { useContext } from "react";
@@ -22,13 +22,18 @@ const Home = () => {
   // }, []);
 
   return (
-    <>
+    <HomeWrapper>
       <HeaderImg />
       <Categories />
       {/* <ListingGrid items={items} /> */}
       {/* {isLoaded && <ListingGrid itemList={Object.values(items)} />} */}
-    </>
+    </HomeWrapper>
   );
 };
+
+const HomeWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
 
 export default Home;
