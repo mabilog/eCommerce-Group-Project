@@ -14,7 +14,9 @@ const {
   createOrder,
   deleteOrder,
 
-// below are the new functions for Sidebar navigations
+  getCategories,
+  getCategory,
+  // below are the new functions for Sidebar navigations
   shopByFitness,
   shopByMedical,
   shopByLifestyle,
@@ -39,7 +41,6 @@ const {
   shopByPrice_100_200,
   shopByPrice_200_300,
   shopByPrice_300plus,
-
 } = require("./handlers");
 
 express()
@@ -68,7 +69,9 @@ express()
 
   .post("/api/create-order", createOrder)
   .delete("/api/delete-order", deleteOrder)
-  
+
+  .get("/api/get-categories", getCategories)
+  .get("/api/get-category/:category", getCategory)
 
   .get("/api/get-items-fitness", shopByFitness)
   .get("/api/get-items-medical", shopByMedical)

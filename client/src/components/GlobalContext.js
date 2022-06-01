@@ -15,8 +15,10 @@ export const GlobalProvider = ({ children }) => {
   const [cardExp, setCardExp] = useState();
   const [cardSec, setCardSec] = useState();
 
-  // CreditCard.js
+  // Categories.js
+  const [categories, setCategories] = useState();
 
+  // CreditCard.js
   const resetCreditCardInfo = () => {
     setCardNum();
     setCardName();
@@ -25,8 +27,15 @@ export const GlobalProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    console.log(cartItems);
-  }, [cartItems]);
+    fetch("/api/get-categories")
+      .then((res) => res.json())
+      .then((data) => setCategories(data.categories));
+  }, []);
+
+  useEffect(() => {
+    console.log(categories);
+  }, [categories]);
+
   return (
     <GlobalContext.Provider
       value={{
@@ -48,6 +57,7 @@ export const GlobalProvider = ({ children }) => {
         setCardExp,
         cardSec,
         setCardSec,
+        categories,
         resetCreditCardInfo,
       }}
     >

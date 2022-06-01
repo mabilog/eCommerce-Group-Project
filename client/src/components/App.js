@@ -13,6 +13,8 @@ import Cart from "./Cart";
 import ItemDetails from "./ItemDetails";
 import CreditCard from "./CreditCard";
 import Orders from "./Orders";
+import Categories from "./Categories";
+import Category from "./Category";
 
 function App() {
   return (
@@ -27,6 +29,8 @@ function App() {
             <Route path="/checkout" element={<CreditCard />} />
             <Route path="/items/:itemId" element={<ItemDetails />} />
             <Route path="/orders" element={<Orders />} />
+            <Route path="/categories" element={<Categories />} />
+            <Route path="/category/:category" element={<Category />} />
           </Routes>
         </ComponentWrapper>
       </BrowserRouter>
