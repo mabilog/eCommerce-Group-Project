@@ -32,7 +32,7 @@ const Header = () => {
           <SearchBar />
           <Right>
             <div>Login</div>
-            <NavLinks to="/cart/:orderid">
+            <NavLinks to="/cart">
               <AiOutlineShopping />
               <span>{cartItems.length}</span>
             </NavLinks>
