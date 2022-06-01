@@ -5,22 +5,23 @@ import { useEffect, useState } from "react";
 import HeaderImg from "./HeaderImg";
 
 const Home = (props) => {
-  const [items, setItems] = useState([]);
-  const [isLoaded, setIsLoaded] = useState(false);
+  // const [items, setItems] = useState([]);
+  // const [isLoaded, setIsLoaded] = useState(false);
 
-  useEffect(() => {
-    fetch("/api/get-items")
-      .then((res) => res.json())
-      .then((itemsDataObj) => {
-        setItems(itemsDataObj.data);
-        setIsLoaded(true);
-      });
-  }, []);
+  // useEffect(() => {
+  //   fetch("/api/get-items")
+  //     .then((res) => res.json())
+  //     .then((itemsDataObj) => {
+  //       setItems(itemsDataObj.data);
+  //       setIsLoaded(true);
+  //     });
+  // }, []);
 
   return (
     <>
       <HeaderImg />
-      {isLoaded && <ListingGrid itemList={Object.values(items)} />}
+      <ListingGrid />
+      {/* {isLoaded && <ListingGrid itemList={Object.values(items)} />} */}
     </>
   );
 };
