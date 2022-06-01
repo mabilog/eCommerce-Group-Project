@@ -1,31 +1,8 @@
-import { createContext, useEffect, useState, useReducer } from "react";
+import { createContext, useEffect, useState } from "react";
 
 export const GlobalContext = createContext(null);
 
-const initialState = {
-  cartItems: [],
-  quantity: null,
-  subtotal: null,
-  total: null,
-};
-
-const reducer = (state, action) => {
-  switch (action.type) {
-    case "ADD": {
-      return {
-        ...state,
-        cartItems: [...state.cartItems, action.cartItems],
-      };
-    }
-
-    default:
-      throw new Error(`Unrecognized action: ${action.type}`);
-  }
-};
-
 export const GlobalProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(reducer, initialState);
-
   const [itemId, setItemId] = useState();
   const [inventoryData, setInventoryData] = useState();
   const [inStock, setInStock] = useState(true);
