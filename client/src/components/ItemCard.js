@@ -70,6 +70,7 @@ const ItemCardLink = styled(Link)`
   color: #000000;
   background-color: #ffffff;
   line-height: 20px;
+  z-index: 0;
 `;
 
 const Wrapper = styled.div`
@@ -78,11 +79,13 @@ const Wrapper = styled.div`
   align-items: center;
   align-content: center;
   margin: auto;
+  
 `;
 
 const ItemImg = styled.img`
   margin-bottom: 10px;
   max-height: 150px;
+  z-index: 1;
 `;
 
 const Name = styled.div`
