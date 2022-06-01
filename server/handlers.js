@@ -195,6 +195,401 @@ const deleteOrder = async (req, res) => {
   }
 
 };
+
+
+const shopByFitness = async(req, res) => {   
+  try {
+    const client = new MongoClient(MONGO_URI, options);
+    await client.connect();
+    console.log("connected!");
+
+    const db = client.db(DATABASE_NAME);
+    const result = await db.collection("items").find({category: "Fitness"}).toArray();
+    result.length > 0
+        ? sendMessage(res, 200, result, "Shop by Fitness success!")
+        : sendMessage(res, 404, null, "Shop by Fitness failed!")
+    client.close();
+  }catch (err) {
+        console.log(err.stack);
+  }
+ }; 
+
+ const shopByMedical = async(req, res) => {   
+  try {
+    const client = new MongoClient(MONGO_URI, options);
+    await client.connect();
+    console.log("connected!");
+
+    const db = client.db(DATABASE_NAME);
+    const result = await db.collection("items").find({category: "Medical"}).toArray();
+    result.length > 0
+        ? sendMessage(res, 200, result, "Shop by Medical success!")
+        : sendMessage(res, 404, null, "Shop by Medical failed!")
+    client.close();
+  }catch (err) {
+        console.log(err.stack);
+  }
+ }; 
+
+ const shopByLifestyle = async(req, res) => {   
+  try {
+    const client = new MongoClient(MONGO_URI, options);
+    await client.connect();
+    console.log("connected!");
+
+    const db = client.db(DATABASE_NAME);
+    const result = await db.collection("items").find({category: "Lifestyle"}).toArray();
+    result.length > 0
+        ? sendMessage(res, 200, result, "Shop by Lifestyle success!")
+        : sendMessage(res, 404, null, "Shop by Lifestyle failed!")
+    client.close();
+  }catch (err) {
+        console.log(err.stack);
+  }
+ }; 
+
+ const shopByEntertainment = async(req, res) => {   
+  try {
+    const client = new MongoClient(MONGO_URI, options);
+    await client.connect();
+    console.log("connected!");
+
+    const db = client.db(DATABASE_NAME);
+    const result = await db.collection("items").find({category: "Entertainment"}).toArray();
+    result.length > 0
+        ? sendMessage(res, 200, result, "Shop by Entertainment success!")
+        : sendMessage(res, 404, null, "Shop by Entertainment failed!")
+    client.close();
+  }catch (err) {
+        console.log(err.stack);
+  }
+ }; 
+
+ const shopByGaming = async(req, res) => {   
+  try {
+    const client = new MongoClient(MONGO_URI, options);
+    await client.connect();
+    console.log("connected!");
+
+    const db = client.db(DATABASE_NAME);
+    const result = await db.collection("items").find({category: "Gaming"}).toArray();
+    result.length > 0
+        ? sendMessage(res, 200, result, "Shop by Gaming success!")
+        : sendMessage(res, 404, null, "Shop by Gaming failed!")
+    client.close();
+  }catch (err) {
+        console.log(err.stack);
+  }
+ }; 
+
+ const shopByIndustrial = async(req, res) => {   
+  try {
+    const client = new MongoClient(MONGO_URI, options);
+    await client.connect();
+    console.log("connected!");
+
+    const db = client.db(DATABASE_NAME);
+    const result = await db.collection("items").find({category: "Industrial"}).toArray();
+    result.length > 0
+        ? sendMessage(res, 200, result, "Shop by Industrial success!")
+        : sendMessage(res, 404, null, "Shop by Industrial failed!")
+    client.close();
+  }catch (err) {
+        console.log(err.stack);
+  }
+ }; 
+
+ const shopByPetsandAnimals= async(req, res) => {   
+  try {
+    const client = new MongoClient(MONGO_URI, options);
+    await client.connect();
+    console.log("connected!");
+
+    const db = client.db(DATABASE_NAME);
+    const result = await db.collection("items").find({category: "Pets and Animals"}).toArray();
+    result.length > 0
+        ? sendMessage(res, 200, result, "Shop by Pets and Animals success!")
+        : sendMessage(res, 404, null, "Shop by Pets and Animals failed!")
+    client.close();
+  }catch (err) {
+        console.log(err.stack);
+  }
+ }; 
+
+ const shopByArms = async(req, res) => {   
+  try {
+    const client = new MongoClient(MONGO_URI, options);
+    await client.connect();
+    console.log("connected!");
+
+    const db = client.db(DATABASE_NAME);
+    const result = await db.collection("items").find({body_location: "Arms"}).toArray();
+    result.length > 0
+        ? sendMessage(res, 200, result, "Shop by Arms success!")
+        : sendMessage(res, 404, null, "Shop by Arms failed!")
+    client.close();
+  }catch (err) {
+        console.log(err.stack);
+  }
+ }; 
+
+ const shopByWaist = async(req, res) => {   
+  try {
+    const client = new MongoClient(MONGO_URI, options);
+    await client.connect();
+    console.log("connected!");
+
+    const db = client.db(DATABASE_NAME);
+    const result = await db.collection("items").find({body_location: "Waist"}).toArray();
+    result.length > 0
+        ? sendMessage(res, 200, result, "Shop by Waist success!")
+        : sendMessage(res, 404, null, "Shop by Waist failed!")
+    client.close();
+  }catch (err) {
+        console.log(err.stack);
+  }
+ }; 
+
+ const shopByHead = async(req, res) => {   
+  try {
+    const client = new MongoClient(MONGO_URI, options);
+    await client.connect();
+    console.log("connected!");
+
+    const db = client.db(DATABASE_NAME);
+    const result = await db.collection("items").find({body_location: "Head"}).toArray();
+    result.length > 0
+        ? sendMessage(res, 200, result, "Shop by Head success!")
+        : sendMessage(res, 404, null, "Shop by Head failed!")
+    client.close();
+  }catch (err) {
+        console.log(err.stack);
+  }
+ }; 
+
+ const shopByChest = async(req, res) => {   
+  try {
+    const client = new MongoClient(MONGO_URI, options);
+    await client.connect();
+    console.log("connected!");
+
+    const db = client.db(DATABASE_NAME);
+    const result = await db.collection("items").find({body_location: "Chest"}).toArray();
+    result.length > 0
+        ? sendMessage(res, 200, result, "Shop by Chest success!")
+        : sendMessage(res, 404, null, "Shop by Chest failed!")
+    client.close();
+  }catch (err) {
+        console.log(err.stack);
+  }
+ }; 
+
+ const shopByHands = async(req, res) => {   
+  try {
+    const client = new MongoClient(MONGO_URI, options);
+    await client.connect();
+    console.log("connected!");
+
+    const db = client.db(DATABASE_NAME);
+    const result = await db.collection("items").find({body_location: "Hands"}).toArray();
+    result.length > 0
+        ? sendMessage(res, 200, result, "Shop by Hands success!")
+        : sendMessage(res, 404, null, "Shop by Hands failed!")
+    client.close();
+  }catch (err) {
+        console.log(err.stack);
+  }
+ }; 
+
+ const shopByNeck = async(req, res) => {   
+  try {
+    const client = new MongoClient(MONGO_URI, options);
+    await client.connect();
+    console.log("connected!");
+
+    const db = client.db(DATABASE_NAME);
+    const result = await db.collection("items").find({body_location: "Neck"}).toArray();
+    result.length > 0
+        ? sendMessage(res, 200, result, "Shop by Neck success!")
+        : sendMessage(res, 404, null, "Shop by Neck failed!")
+    client.close();
+  }catch (err) {
+        console.log(err.stack);
+  }
+ }; 
+
+ const shopByFeet = async(req, res) => {   
+  try {
+    const client = new MongoClient(MONGO_URI, options);
+    await client.connect();
+    console.log("connected!");
+
+    const db = client.db(DATABASE_NAME);
+    const result = await db.collection("items").find({body_location: "Feet"}).toArray();
+    result.length > 0
+        ? sendMessage(res, 200, result, "Shop by Feet success!")
+        : sendMessage(res, 404, null, "Shop by Feet failed!")
+    client.close();
+  }catch (err) {
+        console.log(err.stack);
+  }
+ }; 
+
+ const shopByWrist = async(req, res) => {   
+  try {
+    const client = new MongoClient(MONGO_URI, options);
+    await client.connect();
+    console.log("connected!");
+
+    const db = client.db(DATABASE_NAME);
+    const result = await db.collection("items").find({body_location: "Wrist"}).toArray();
+    result.length > 0
+        ? sendMessage(res, 200, result, "Shop by Wrist success!")
+        : sendMessage(res, 404, null, "Shop by Wrist failed!")
+    client.close();
+  }catch (err) {
+        console.log(err.stack);
+  }
+ }; 
+
+ const shopByTorso = async(req, res) => {   
+  try {
+    const client = new MongoClient(MONGO_URI, options);
+    await client.connect();
+    console.log("connected!");
+
+    const db = client.db(DATABASE_NAME);
+    const result = await db.collection("items").find({body_location: "Torso"}).toArray();
+    result.length > 0
+        ? sendMessage(res, 200, result, "Shop by Torso success!")
+        : sendMessage(res, 404, null, "Shop by Torso failed!")
+    client.close();
+  }catch (err) {
+        console.log(err.stack);
+  }
+ }; 
+
+ const shopByAZ = async(req, res) => {   
+  try {
+    const client = new MongoClient(MONGO_URI, options);
+    await client.connect();
+    console.log("connected!");
+
+    const db = client.db(DATABASE_NAME);
+    const result = await db.collection("items").find().sort("name", 1).toArray();
+    result.length > 0
+        ? sendMessage(res, 200, result, "Shop by A-Z success!")
+        : sendMessage(res, 404, null, "Shop by A-Z failed!")
+    client.close();
+  }catch (err) {
+        console.log(err.stack);
+  }
+ }; 
+
+ const shopByPrice_0_100 = async(req, res) => {   
+  try {
+    const client = new MongoClient(MONGO_URI, options);
+    await client.connect();
+    console.log("connected!");
+
+    const db = client.db(DATABASE_NAME);
+    const result = await db.collection("items").find().toArray();
+
+    const result_0_100 = result.map((item) => {
+      const priceNumber = Number(item.price.replace(/[^0-9\.]+/g,""));
+
+      if( priceNumber < 100)
+        return item;
+    }
+    );
+
+    result.length > 0
+        ? sendMessage(res, 200, result_0_100, "Shop by price 0-100 success!")
+        : sendMessage(res, 404, null, "Shop by price 0-100  failed!")
+    client.close();
+  }catch (err) {
+        console.log(err.stack);
+  }
+ }; 
+
+ const shopByPrice_100_200 = async(req, res) => {   
+  try {
+    const client = new MongoClient(MONGO_URI, options);
+    await client.connect();
+    console.log("connected!");
+
+    const db = client.db(DATABASE_NAME);
+    const result = await db.collection("items").find().toArray();
+
+    const result_100_200 = result.map((item) => {
+      const priceNumber = Number(item.price.replace(/[^0-9\.]+/g,""));
+
+      if( priceNumber >= 100 && priceNumber < 200)
+        return item;
+    }
+    );
+
+    result.length > 0
+        ? sendMessage(res, 200, result_100_200, "Shop by price 100-200 success!")
+        : sendMessage(res, 404, null, "Shop by price 100-200 failed!")
+    client.close();
+  }catch (err) {
+        console.log(err.stack);
+  }
+ }; 
+
+ const shopByPrice_200_300 = async(req, res) => {   
+  try {
+    const client = new MongoClient(MONGO_URI, options);
+    await client.connect();
+    console.log("connected!");
+
+    const db = client.db(DATABASE_NAME);
+    const result = await db.collection("items").find().toArray();
+
+    const result_200_300 = result.map((item) => {
+      const priceNumber = Number(item.price.replace(/[^0-9\.]+/g,""));
+
+      if( priceNumber >= 200 && priceNumber < 300)
+        return item;
+    }
+    );
+
+    result.length > 0
+        ? sendMessage(res, 200, result_200_300, "Shop by price 200-300 success!")
+        : sendMessage(res, 404, null, "hop by price 200-300 failed!")
+    client.close();
+  }catch (err) {
+        console.log(err.stack);
+  }
+ }; 
+
+ const shopByPrice_300plus = async(req, res) => {   
+  try {
+    const client = new MongoClient(MONGO_URI, options);
+    await client.connect();
+    console.log("connected!");
+
+    const db = client.db(DATABASE_NAME);
+    const result = await db.collection("items").find().toArray();
+
+    const result_300b = result.map((item) => {
+      const priceNumber = Number(item.price.replace(/[^0-9\.]+/g,""));
+
+      if( priceNumber >= 300)
+        return item;
+    }
+    );
+
+    result.length > 0
+        ? sendMessage(res, 200, result_300b, "Shop by price 300+ success!")
+        : sendMessage(res, 404, null, "Shop by price 300+  failed!")
+    client.close();
+  }catch (err) {
+        console.log(err.stack);
+  }
+ }; 
+
 module.exports = {
   getCompanies,
   getCompany,
@@ -203,4 +598,31 @@ module.exports = {
 
   createOrder,
   deleteOrder,
+  
+// below are the new functions for Sidebar navigations
+  shopByFitness,
+  shopByMedical,
+  shopByLifestyle,
+  shopByEntertainment,
+  shopByGaming,
+  shopByIndustrial,
+  shopByPetsandAnimals,
+
+  shopByArms,
+  shopByWaist,
+  shopByHead,
+  shopByChest,
+  shopByHands,
+  shopByNeck,
+  shopByFeet,
+  shopByWrist,
+  shopByTorso,
+
+  shopByAZ,
+
+  shopByPrice_0_100,
+  shopByPrice_100_200,
+  shopByPrice_200_300,
+  shopByPrice_300plus
+
 };
