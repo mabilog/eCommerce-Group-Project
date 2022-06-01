@@ -26,10 +26,19 @@ export const GlobalProvider = ({ children }) => {
     setCardSec();
   };
 
+  // ListingGrid.js
+  const [items, setItems] = useState([]);
+
   useEffect(() => {
     fetch("/api/get-categories")
       .then((res) => res.json())
       .then((data) => setCategories(data.categories));
+
+    fetch("/api/get-items")
+      .then((res) => res.json())
+      .then((itemsDataObj) => {
+        setItems(itemsDataObj.data);
+      });
   }, []);
 
   useEffect(() => {
@@ -58,6 +67,9 @@ export const GlobalProvider = ({ children }) => {
         cardSec,
         setCardSec,
         categories,
+        setCategories,
+        items,
+        setItems,
         resetCreditCardInfo,
       }}
     >

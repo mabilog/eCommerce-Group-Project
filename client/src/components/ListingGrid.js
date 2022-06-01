@@ -1,10 +1,13 @@
+import { useContext } from "react";
 import styled from "styled-components";
 import ItemCard from "./ItemCard";
 
-const ListingGrid = ({ itemList }) => {
+import { GlobalContext } from "./GlobalContext";
+const ListingGrid = () => {
+  const { items } = useContext(GlobalContext);
   return (
     <Wrapper>
-      {itemList.map((item) => {
+      {items?.map((item) => {
         return <ItemCard key={item._id} item={item} />;
       })}
     </Wrapper>
