@@ -29,9 +29,8 @@ const CartItem = ({ item }) => {
               >
                 +
               </button>
+              <Delete onClick={() => deleteFromCart(item._id)}>Delete</Delete>
             </div>
-
-            <Delete onClick={() => deleteFromCart(item._id)}>Delete</Delete>
           </div>
         </Div>
       ) : null}
