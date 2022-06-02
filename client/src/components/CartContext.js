@@ -5,12 +5,14 @@ export const CartContext = createContext(null);
 const initialState = {
   cartItems: [],
   idsArray: [],
-  // subtotal: 0,
+  subtotal: 0,
 };
 
 const reducer = (state, action) => {
   switch (action.type) {
     case "add-to-cart": {
+      console.log(action);
+      console.log(state);
       return {
         ...state,
         cartItems: [
@@ -22,7 +24,7 @@ const reducer = (state, action) => {
           },
         ],
         idsArray: [...state.idsArray, Number(Object.values(action)[0])],
-        // subtotal: ...state.subtotal + action.price * 1
+        subtotal: state.subtotal + Number(Object.values(action)[1]),
       };
     }
     case "remove-from-cart": {
@@ -31,9 +33,12 @@ const reducer = (state, action) => {
         cartItems: [
           ...state.cartItems.filter((item) => item._id !== action._id),
         ],
+        subtotal: state.subtotal - Number(Object.values(action)[1]),
       };
     }
     case "add-quantity": {
+      console.log(action);
+      console.log(state);
       return {
         ...state,
         cartItems: [
@@ -45,6 +50,13 @@ const reducer = (state, action) => {
             }
           }),
         ],
+        subtotal:
+          state.subtotal +
+          state.cartItems.find((item) => {
+            if (item._id === action.data) {
+              return item.price;
+            }
+          }).price,
       };
     }
     case "remove-quantity": {
@@ -60,16 +72,34 @@ const reducer = (state, action) => {
             }
           }),
         ],
+        subtotal:
+          state.subtotal -
+          state.cartItems.find((item) => {
+            if (item._id === action.data) {
+              return item.price;
+            }
+          }).price,
       };
     }
     case "delete-from-cart": {
       console.log(action);
+      console.log(state.cartItems);
       return {
         ...state,
         cartItems: [
           ...state.cartItems.filter((item) => item._id !== action.data),
         ],
         idsArray: [...state.idsArray.filter((item) => item !== action.data)],
+        subtotal:
+          state.subtotal -
+          state.cartItems.find((item) => {
+            if (item._id === action.data) {
+              return item.price;
+            }
+          }).price *
+            state.cartItems.find((item) => {
+              if (item._id === action.data) return item.quantity;
+            }).quantity,
       };
     }
     default:
