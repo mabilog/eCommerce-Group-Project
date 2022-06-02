@@ -18,6 +18,7 @@ const CartItem = ({ item }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state]);
 
+  console.log(item.numInStock);
   return (
     <>
       {item ? (
@@ -38,7 +39,12 @@ const CartItem = ({ item }) => {
                 -
               </Button>
               <span> {quantity} </span>
-              <Button onClick={() => addQuantity(item._id)}>+</Button>
+              <Button
+                onClick={() => addQuantity(item._id)}
+                disabled={quantity === item.numInStock}
+              >
+                +
+              </Button>
               <Delete onClick={() => deleteFromCart(item._id)}>
                 <FiTrash2 />
               </Delete>

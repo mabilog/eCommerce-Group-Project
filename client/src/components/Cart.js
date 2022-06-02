@@ -22,10 +22,12 @@ const Cart = () => {
   };
   useEffect(() => {
     handleFetch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     handleFetch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state]);
   return (
     <CartWrapper>
@@ -35,7 +37,9 @@ const Cart = () => {
         {items?.map((itm) => (
           <CartItem item={itm} key={itm._id} />
         ))}
-        <Subtotal>Subtotal(#items): ${state.subtotal.toFixed(2) || 0}</Subtotal>
+        <Subtotal>
+          Subtotal({state.totalItems}): ${state.subtotal.toFixed(2) || 0}
+        </Subtotal>
       </Wrapper>
       <Right>
         <CreditCard />
