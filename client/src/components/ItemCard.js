@@ -1,11 +1,7 @@
-import { useContext } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { GlobalContext } from "./GlobalContext";
 
 const ItemCard = ({ item }) => {
-  const { addToCart } = useContext(GlobalContext);
-
   const onMouseEnterHandler = (e) => {
     e.target.style.transform = "scale(1.06)";
   };

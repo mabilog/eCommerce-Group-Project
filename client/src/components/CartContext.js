@@ -72,17 +72,6 @@ const reducer = (state, action) => {
         idsArray: [...state.idsArray.filter((item) => item !== action.data)],
       };
     }
-    // case "add-customer-info": {
-    //   return {
-    //     ...state,
-    //     firstName: action.firstName,
-    //     lastName: action.lastName,
-    //     email: action.email,
-    //     creditCardNumber: action.creditCardNumber,
-    //     creditCardExp: action.creditCardExp,
-    //     creditCardCVV: action.creditCardCVV,
-    //   };
-    // }
     default:
       throw new Error("Something went wrong");
   }
@@ -92,14 +81,12 @@ export const CartProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const addToCart = (...data) => {
-    console.log(...data);
     dispatch({ type: "add-to-cart", ...data });
   };
   const removeFromCart = (data) => {
     dispatch({ type: "remove-from-cart", data });
   };
   const addQuantity = (data) => {
-    console.log(data);
     dispatch({ type: "add-quantity", data });
   };
   const removeQuantity = (data) => {
@@ -108,10 +95,6 @@ export const CartProvider = ({ children }) => {
   const deleteFromCart = (data) => {
     dispatch({ type: "delete-from-cart", data });
   };
-  // const addCustomerInfo = (data) => {
-  //   dispatch({ type: "add-customer-info", data });
-  // };
-
   return (
     <CartContext.Provider
       value={{
@@ -122,7 +105,6 @@ export const CartProvider = ({ children }) => {
           addQuantity,
           removeQuantity,
           deleteFromCart,
-          // addCustomerInfo,
         },
       }}
     >

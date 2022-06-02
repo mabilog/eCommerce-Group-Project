@@ -1,40 +1,25 @@
 import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-// import { GlobalContext } from "./GlobalContext";
+
 import { CartContext } from "./CartContext";
 const CartItem = ({ item }) => {
-  // const { addToCart, removeFromCart, deleteFromCart, cart } =
-  // useContext(GlobalContext);
-
-  // const itemObj = cart.find((itm) => itm._id === item._id);
-  // console.log(item);
   const [quantity, setQuantity] = useState(0);
   const {
     state,
-    actions: {
-      addToCart,
-      removeFromCart,
-      addQuantity,
-      removeQuantity,
-      deleteFromCart,
-    },
+    actions: { addQuantity, removeQuantity, deleteFromCart },
   } = useContext(CartContext);
 
   useEffect(() => {
-    console.log(state.cartItems);
     if (state.cartItems.some((itm) => itm._id === item._id)) {
       const itemObj = state.cartItems.find((itm) => itm._id === item._id);
       setQuantity(itemObj.quantity);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state]);
-
-  // const itemObj = state.cartItems.find((itm) => itm._id === item._id);
-  // console.log(itemObj.quantity);
 
   return (
     <>
-      {/* {item && itemObj ? ( */}
       {item ? (
         <Div key={item._id}>
           <div>
@@ -47,16 +32,8 @@ const CartItem = ({ item }) => {
             <Price>{item.price}</Price>
             <div>
               <button onClick={() => removeQuantity(item._id)}>-</button>
-              <span>
-                {quantity}
-                {/* {state.cartItems.filter((itm) => itm._id === item._id).quantity} */}
-              </span>
-              <button
-                onClick={() => addQuantity(item._id)}
-                // disabled={itemObj.quantity === item.numInStock}
-              >
-                +
-              </button>
+              <span>{quantity}</span>
+              <button onClick={() => addQuantity(item._id)}>+</button>
               <Delete onClick={() => deleteFromCart(item._id)}>Delete</Delete>
             </div>
           </div>
