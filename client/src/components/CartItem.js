@@ -18,7 +18,6 @@ const CartItem = ({ item }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state]);
 
-  console.log(item.numInStock);
   return (
     <>
       {item ? (

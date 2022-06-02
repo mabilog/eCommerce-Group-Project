@@ -38,7 +38,7 @@ const Cart = () => {
           <CartItem item={itm} key={itm._id} />
         ))}
         <Subtotal>
-          Subtotal({state.totalItems}): ${state.subtotal.toFixed(2) || 0}
+          Subtotal({state.totalItems}): ${+state.subtotal.toFixed(2) || 0}
         </Subtotal>
       </Wrapper>
       <Right>

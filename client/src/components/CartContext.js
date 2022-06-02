@@ -12,8 +12,6 @@ const initialState = {
 const reducer = (state, action) => {
   switch (action.type) {
     case "add-to-cart": {
-      console.log(action);
-      console.log(state);
       return {
         ...state,
         cartItems: [
@@ -40,8 +38,6 @@ const reducer = (state, action) => {
       };
     }
     case "add-quantity": {
-      console.log(action);
-      console.log(state);
       return {
         ...state,
         cartItems: [
@@ -87,8 +83,6 @@ const reducer = (state, action) => {
       };
     }
     case "delete-from-cart": {
-      console.log(action);
-      console.log(state.cartItems);
       return {
         ...state,
         cartItems: [
