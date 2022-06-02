@@ -57,8 +57,8 @@ const CreditCard = () => {
         }}
       >
         <TopWrapper>
-          <h2>Payment</h2>
-          <p>All transactions are secure and encrypted (no theyre not)</p>
+          <PaymentHeader>Payment</PaymentHeader>
+          <p>All transactions are secure and encrypted (...lol jk)</p>
         </TopWrapper>
         <InputWrapper>
           <input
@@ -79,7 +79,7 @@ const CreditCard = () => {
           />
           <input
             type="email"
-            placeholder="e-mail"
+            placeholder="Email"
             name="email"
             id="input-email"
             required
@@ -113,7 +113,7 @@ const CreditCard = () => {
             <input
               type="number"
               name="expiration-date"
-              placeholder="Expiration date"
+              placeholder="Expiration Date"
               id="input-card-number"
               required
               onChange={(e) => updateCcExp(e.target.value)}
@@ -122,14 +122,14 @@ const CreditCard = () => {
               type="number"
               name="security-code"
               id="input-card-sec"
-              placeholder="Security Code"
+              placeholder="CVC"
               required
               onChange={(e) => updateCcCvv(e.target.value)}
             />
           </SecurityWrapper>
         </InputWrapper>
         <ButtonWrapper>
-          <SubmitBtn type="submit">Check out</SubmitBtn>
+          <SubmitBtn type="submit">Confirm Purchase</SubmitBtn>
         </ButtonWrapper>
       </FormWrapper>
     </Wrapper>
@@ -141,6 +141,9 @@ const Wrapper = styled.div`
   justify-content: center;
   height: 100%;
   width: 100%;
+  margin-left: 50px;
+  margin-top: 20px;
+  font-family: "Jost";
 `;
 const TopWrapper = styled.div`
   display: flex;
@@ -157,9 +160,10 @@ const FormWrapper = styled.form`
   input {
     padding-left: 15px;
     border: 1px solid #888;
-    border-radius: 15px;
+    border-radius: 5px;
     line-height: 36px;
     font-size: 18px;
+    font-family: "Jost";
   }
   // Removing some input type="number" styling
   /* Chrome, Safari, Edge, Opera */
@@ -204,8 +208,9 @@ const ButtonWrapper = styled.div`
 
 const SubmitBtn = styled.button`
   font-size: 20px;
-  padding: 20px 40px;
-  border-radius: 30px;
+  font-family: "Jost";
+  padding: 15px 35px;
+  border-radius: 5px;
   border: none;
   background-color: var(--primary-color);
   color: #fff;
@@ -218,5 +223,14 @@ const SubmitBtn = styled.button`
     pointer-events: none;
   }
 `;
+
+const PaymentHeader = styled.h1`
+font-size: 36px;
+font-weight: 700;
+letter-spacing: 3pt;
+text-transform: uppercase;
+/* text-align: center; */
+color: #BE974C;
+`
 
 export default CreditCard;
