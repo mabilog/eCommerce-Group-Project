@@ -31,7 +31,12 @@ const CartItem = ({ item }) => {
             <Name>{item.name}</Name>
             <Price>{item.price}</Price>
             <div>
-              <Button onClick={() => removeQuantity(item._id)}>-</Button>
+              <Button
+                onClick={() => removeQuantity(item._id)}
+                disabled={quantity === 1}
+              >
+                -
+              </Button>
               <span> {quantity} </span>
               <Button onClick={() => addQuantity(item._id)}>+</Button>
               <Delete onClick={() => deleteFromCart(item._id)}>

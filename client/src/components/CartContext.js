@@ -6,6 +6,7 @@ const initialState = {
   cartItems: [],
   idsArray: [],
   subtotal: 0,
+  totalItems: 0,
 };
 
 const reducer = (state, action) => {
@@ -25,6 +26,7 @@ const reducer = (state, action) => {
         ],
         idsArray: [...state.idsArray, Number(Object.values(action)[0])],
         subtotal: state.subtotal + Number(Object.values(action)[1]),
+        totalItems: state.totalItems + 1,
       };
     }
     case "remove-from-cart": {
@@ -34,6 +36,7 @@ const reducer = (state, action) => {
           ...state.cartItems.filter((item) => item._id !== action._id),
         ],
         subtotal: state.subtotal - Number(Object.values(action)[1]),
+        totalItems: state.totalItems - 1,
       };
     }
     case "add-quantity": {
@@ -57,6 +60,7 @@ const reducer = (state, action) => {
               return item.price;
             }
           }).price,
+        totalItems: state.totalItems + 1,
       };
     }
     case "remove-quantity": {
@@ -79,6 +83,7 @@ const reducer = (state, action) => {
               return item.price;
             }
           }).price,
+        totalItems: state.totalItems - 1,
       };
     }
     case "delete-from-cart": {
@@ -100,6 +105,11 @@ const reducer = (state, action) => {
             state.cartItems.find((item) => {
               if (item._id === action.data) return item.quantity;
             }).quantity,
+        totalItems:
+          state.totalItems -
+          state.cartItems.find((item) => {
+            if (item._id === action.data) return item.quantity;
+          }).quantity,
       };
     }
     default:

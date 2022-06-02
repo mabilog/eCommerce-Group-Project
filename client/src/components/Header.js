@@ -4,10 +4,11 @@ import SearchBar from "./SearchBar";
 import styled from "styled-components";
 import { NavLink, Link } from "react-router-dom";
 import { AiOutlineShopping } from "react-icons/ai";
+import { CartContext } from "./CartContext";
 
 const Header = () => {
   const { categories } = useContext(GlobalContext);
-
+  const { state } = useContext(CartContext);
   let numOfItems = 0;
 
   return (
@@ -34,7 +35,7 @@ const Header = () => {
       <Right>
         <NavLinks to="/cart">
           <AiOutlineShopping />
-          <span>{numOfItems}</span>
+          <span>{state.totalItems}</span>
         </NavLinks>
       </Right>
     </Wrapper>
