@@ -9,7 +9,6 @@ import { CartContext } from "./CartContext";
 const Header = () => {
   const { categories } = useContext(GlobalContext);
   const { state } = useContext(CartContext);
-  let numOfItems = 0;
 
   return (
     <Wrapper>
