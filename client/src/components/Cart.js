@@ -3,10 +3,12 @@ import { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "./GlobalContext";
 import styled from "styled-components";
 import CartItem from "./CartItem";
+import CreditCard from "./CreditCard";
 
 const Cart = () => {
   const { cart } = useContext(GlobalContext);
   const [items, setItems] = useState([]);
+  const [subtotal, setSubtotal] = useState(0);
   useEffect(() => {
     if (cart)
       fetch(`/api/get-item-details`, {
@@ -22,14 +24,19 @@ const Cart = () => {
   }, []);
 
   return (
-    <Wrapper>
-      <Title>Shopping Cart</Title>
-      <Border></Border>
-      {items?.map((itm) => (
-        <CartItem item={itm} key={itm._id} />
-      ))}
-      <Subtotal>Subtotal(#items): $XX.XX</Subtotal>
-    </Wrapper>
+    <CartWrapper>
+      <Wrapper>
+        <Title>Shopping Cart</Title>
+        <Border></Border>
+        {items?.map((itm) => (
+          <CartItem item={itm} key={itm._id} />
+        ))}
+        <Subtotal>Subtotal(#items): ${subtotal}</Subtotal>
+      </Wrapper>
+      <Right>
+        <CreditCard />
+      </Right>
+    </CartWrapper>
   );
 };
 const Title = styled.div`
@@ -40,7 +47,9 @@ const Border = styled.div`
   border-bottom: solid 1px rgb(183, 181, 161);
   margin: 0px 10px 10px 10px;
 `;
-
+const CartWrapper = styled.div`
+  display: flex;
+`;
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -57,6 +66,7 @@ const Subtotal = styled.div`
   padding: 10px 15px;
 `;
 
+const Right = styled.div``;
 //   let addedNumbers = [];
 //   const handleDropdown = (number) => {
 //     for (let i = 0; i <= number; i++) {
