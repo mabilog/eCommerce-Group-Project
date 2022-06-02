@@ -10,7 +10,7 @@ const {
   getCompany,
   getItems,
   getItem,
-
+  getItemDetails,
   createOrder,
   deleteOrder,
 
@@ -21,7 +21,6 @@ const {
   getBodyLocation,
 
   shopByAZ,
-
 } = require("./handlers");
 
 express()
@@ -48,6 +47,7 @@ express()
   .get("/api/get-items", getItems)
   .get("/api/get-items/:_id", getItem)
 
+  .post("/api/get-item-details", getItemDetails)
   .post("/api/create-order", createOrder)
   .delete("/api/delete-order", deleteOrder)
 

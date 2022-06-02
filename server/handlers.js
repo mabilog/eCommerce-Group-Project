@@ -108,6 +108,7 @@ const createOrder = async (req, res) => {
     await client.connect();
 
     const db = client.db(DATABASE_NAME);
+
     /**
      * 1. iterating through the req.body.cartItems array,
      * 2. finding the corresponding _id,
@@ -191,6 +192,33 @@ const deleteOrder = async (req, res) => {
   }
 };
 
+const getItemDetails = async (req, res) => {
+  try {
+    const cart = req.body;
+    const client = new MongoClient(MONGO_URI, options);
+    await client.connect();
+
+    const db = client.db(DATABASE_NAME);
+
+    const itemDetails = await Promise.all(
+      cart.map(async (item) => {
+        const result = await db
+          .collection("items")
+          .findOne({ _id: parseInt(item._id) });
+        return result;
+      })
+    );
+
+    res.status(200).json({
+      status: 200,
+      itemDetails,
+      message: "hello from the other side",
+    });
+    // client.close();
+  } catch (error) {
+    console.log(error);
+  }
+};
 const getCategories = async (req, res) => {
   try {
     const client = new MongoClient(MONGO_URI, options);
@@ -232,7 +260,6 @@ const getCategory = async (req, res) => {
     console.log(err.stack);
   }
 };
-
 
 const getBodyLocations = async (req, res) => {
   try {
@@ -302,6 +329,7 @@ module.exports = {
   getCompany,
   getItems,
   getItem,
+  getItemDetails,
 
   createOrder,
   deleteOrder,
@@ -310,8 +338,7 @@ module.exports = {
   getCategory,
 
   getBodyLocations,
-  getBodyLocation, 
+  getBodyLocation,
 
   shopByAZ,
-
 };
