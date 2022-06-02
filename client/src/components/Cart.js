@@ -65,5 +65,6 @@ const Subtotal = styled.div`
   padding: 10px 15px;
 `;
 
+const Right = styled.div``;
 
 export default Cart;
