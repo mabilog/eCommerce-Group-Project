@@ -5,10 +5,9 @@ import CartItem from "./CartItem";
 import CreditCard from "./CreditCard";
 
 const Cart = () => {
-  const { state } = useContext(CartContext);
-  const [items, setItems] = useState([]);
+  const { state, items, setItems } = useContext(CartContext);
 
-  useEffect(() => {
+  const handleFetch = () => {
     if (state.idsArray)
       fetch(`/api/get-item-details`, {
         method: "POST",
@@ -20,7 +19,14 @@ const Cart = () => {
         .then((res) => res.json())
         .then((data) => setItems(data.itemDetails));
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  };
+  useEffect(() => {
+    handleFetch();
   }, []);
+
+  useEffect(() => {
+    handleFetch();
+  }, [state]);
   return (
     <CartWrapper>
       <Wrapper>

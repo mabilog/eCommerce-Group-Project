@@ -1,4 +1,4 @@
-import { createContext, useReducer } from "react";
+import { createContext, useReducer, useState } from "react";
 
 export const CartContext = createContext(null);
 
@@ -108,6 +108,7 @@ const reducer = (state, action) => {
 };
 
 export const CartProvider = ({ children }) => {
+  const [items, setItems] = useState([]);
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const addToCart = (...data) => {
@@ -136,6 +137,8 @@ export const CartProvider = ({ children }) => {
           removeQuantity,
           deleteFromCart,
         },
+        items,
+        setItems,
       }}
     >
       {children}
