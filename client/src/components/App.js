@@ -11,7 +11,6 @@ import Header from "./Header";
 import Home from "./Home";
 import Cart from "./Cart";
 import ItemDetails from "./ItemDetails";
-import CreditCard from "./CreditCard";
 import Orders from "./Orders";
 import Categories from "./Categories";
 import Category from "./Category";
@@ -27,7 +26,6 @@ function App() {
           <Routes>
             <Route exact path="/" element={<Home />} />
             <Route path="/cart" element={<Cart />} />
-            <Route path="/checkout" element={<CreditCard />} />
             <Route path="/items/:itemId" element={<ItemDetails />} />
             <Route path="/orders" element={<Orders />} />
             <Route path="/categories" element={<Categories />} />
