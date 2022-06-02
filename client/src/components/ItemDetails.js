@@ -154,7 +154,6 @@ const OOSButton = styled.button`
   color: grey;
   background-color: lightgrey;
   font-family: Jost;
-  color: #fff;
   font-size: 16px;
   font-weight: 600;
 `;
