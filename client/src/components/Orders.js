@@ -30,7 +30,7 @@ const Orders = () => {
           <ConfirmationWrapper>
             <Header>Success! Your order is confirmed</Header>
             <div>Order Confirmation #: {orderConfirmation._id}</div>
-            <div>Total: PRICE HERE</div>
+            <div>Total: {orderConfirmation.subtotal}</div>
           </ConfirmationWrapper>
           {/* <div>CartOrders: {orderConfirmation.}</div> */}
           <BigDiv>

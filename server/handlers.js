@@ -121,8 +121,6 @@ const createOrder = async (req, res) => {
           { _id: parseInt(item._id) },
           { $inc: { numInStock: -parseInt(item.quantity) } }
         );
-
-      console.log(result);
     });
 
     const orderObj = {
@@ -195,7 +193,6 @@ const deleteOrder = async (req, res) => {
 const getItemDetails = async (req, res) => {
   try {
     const cart = req.body;
-    console.log(cart);
     const client = new MongoClient(MONGO_URI, options);
     await client.connect();
 
