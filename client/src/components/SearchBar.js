@@ -4,8 +4,6 @@ import styled from "styled-components";
 
 const Searchbar = () => {
   let navigate = useNavigate();
-  //tried using the global context but wouldnt work... so made local state//gaya
-  // const { itemId, setItemId } = useContext(GlobalContext);
 
   const [items, setItems] = useState();
   const [searchItems, setSearchItems] = useState("");
@@ -15,7 +13,6 @@ const Searchbar = () => {
     fetch("/api/get-items")
       .then((res) => res.json())
       .then((data) => {
-        // console.log("itemsdata", data.data);
         setItems(data.data);
       })
       .catch((err) => {
@@ -102,7 +99,7 @@ const Input = styled.input`
   font-size: 18px;
   position: relative;
   padding: 10px;
-  font-family: 'Jost';
+  font-family: "Jost";
   :focus {
     outline: none;
     border-color: rgb(116, 125, 55);
@@ -118,7 +115,7 @@ const Button = styled.button`
   padding: 8px 20px;
   margin-top: 1px;
   margin-left: 3px;
-  font-family: 'Jost';
+  font-family: "Jost";
   font-size: 14px;
   position: absolute;
   color: white;
