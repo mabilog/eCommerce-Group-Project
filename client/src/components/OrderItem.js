@@ -1,14 +1,10 @@
 import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { FiTrash2 } from "react-icons/fi";
 import { CartContext } from "./CartContext";
 const OrderItem = ({ item }) => {
   const [quantity, setQuantity] = useState(0);
-  const {
-    state,
-    actions: { addQuantity, removeQuantity, deleteFromCart },
-  } = useContext(CartContext);
+  const { state } = useContext(CartContext);
 
   useEffect(() => {
     if (state.cartItems.some((itm) => itm._id === item._id)) {
