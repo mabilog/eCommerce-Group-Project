@@ -8,6 +8,11 @@ import { AiOutlineShopping } from "react-icons/ai";
 const Header = () => {
   const { cart, categories } = useContext(GlobalContext);
 
+  let numOfItems = 0;
+
+  cart.forEach((item) => {
+    numOfItems = numOfItems + item.quantity;
+  });
   return (
     <Wrapper>
       <LogoWrapper to="/">
@@ -32,7 +37,7 @@ const Header = () => {
       <Right>
         <NavLinks to="/cart">
           <AiOutlineShopping />
-          <span>{cart.length}</span>
+          <span>{numOfItems}</span>
         </NavLinks>
       </Right>
     </Wrapper>
