@@ -29,7 +29,7 @@ const Cart = () => {
         {items?.map((itm) => (
           <CartItem item={itm} key={itm._id} />
         ))}
-        <Subtotal>Subtotal(#items): ${state.subtotal.toFixed(2)}</Subtotal>
+        <Subtotal>Subtotal(#items): ${state.subtotal.toFixed(2) || 0}</Subtotal>
       </Wrapper>
       <Right>
         <CreditCard />
