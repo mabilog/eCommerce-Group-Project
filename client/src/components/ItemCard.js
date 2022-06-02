@@ -24,16 +24,15 @@ const ItemCard = ({ item }) => {
             src={item.imageSrc}
           />
           <Name>{item.name}</Name>
-          <Price>{item.price}</Price>
           <Divider />
+          <Price>{item.price}</Price>
+
           {item.numInStock <= 0 ? (
-            <OOSButton>Out of stock</OOSButton>
+            <>
+              <OOSButton>Out of stock</OOSButton>
+            </>
           ) : (
-            <div>
-              <CartButton onClick={() => addToCart(item._id)}>
-                {item.price} - Add to Cart
-              </CartButton>
-            </div>
+            <div></div>
           )}
         </Wrapper>
       </ItemCardLink>
@@ -97,25 +96,25 @@ const Divider = styled.hr`
   margin-bottom: 10px;
 `;
 
-const CartButton = styled.button`
-  padding: 15px 35px;
-  border: 0px;
-  color: white;
-  background-color: var(--primary-color);
-  border-radius: 5px;
-  font-family: "Jost";
-  font-size: 14px;
-  font-weight: 900;
-  cursor: pointer;
+// const CartButton = styled.button`
+//   padding: 15px 35px;
+//   border: 0px;
+//   color: white;
+//   background-color: var(--primary-color);
+//   border-radius: 5px;
+//   font-family: "Jost";
+//   font-size: 14px;
+//   font-weight: 900;
+//   cursor: pointer;
 
-  &:disabled {
-    opacity: 0.5;
-    pointer-events: none;
-    cursor: not-allowed;
-  }
-`;
+//   &:disabled {
+//     opacity: 0.5;
+//     pointer-events: none;
+//     cursor: not-allowed;
+//   }
+// `;
 const OOSButton = styled.button`
-  padding: 15px 35px;
+  padding: 10px 25px;
   border: 0px;
   color: grey;
   background-color: lightgrey;
@@ -123,5 +122,6 @@ const OOSButton = styled.button`
   font-weight: 900;
   font-family: "Jost";
   font-size: 14px;
+  margin-top: 10px;
 `;
 export default ItemCard;

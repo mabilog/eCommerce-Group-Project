@@ -48,7 +48,6 @@ const Wrapper = styled.div`
   margin: 20px 0 0 20px;
   background-color: white;
   width: fit-content;
-  border-radius: 7px;
 `;
 
 const Subtotal = styled.div`
@@ -56,24 +55,5 @@ const Subtotal = styled.div`
   justify-content: flex-end;
   padding: 10px 15px;
 `;
-
-//   let addedNumbers = [];
-//   const handleDropdown = (number) => {
-//     for (let i = 0; i <= number; i++) {
-//       addedNumbers.push(i);
-//     }
-//     return;
-//   };
-//   console.log(addedNumbers);
-
-//  <select
-//                 onClick={() => {
-//                   handleDropdown(item.numInStock);
-//                 }}
-//               >
-//                 {addedNumbers.map((number) => {
-//                   return <option>{number} </option>;
-//                 })}
-//               </select>
 
 export default Cart;
