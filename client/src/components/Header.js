@@ -6,40 +6,36 @@ import { NavLink, Link } from "react-router-dom";
 import { AiOutlineShopping } from "react-icons/ai";
 
 const Header = () => {
-  const { cartItems, categories } = useContext(GlobalContext);
+  const { cart, categories } = useContext(GlobalContext);
+
   return (
-    <>
-      <div>
-        <Wrapper>
-          <LogoWrapper to="/">
-            <h1>Dream Team Wearables</h1>
-          </LogoWrapper>
-          <DropdownWrapper>
-            <div>Categories</div>
-            <Dropdown>
-              <DropdownContent>
-                <ShopAll to="/shop">All Products</ShopAll>
-                {categories?.map((category) => {
-                  return (
-                    <CatLink to={`/category/${category}`} key={category}>
-                      {category}
-                    </CatLink>
-                  );
-                })}
-              </DropdownContent>
-            </Dropdown>
-          </DropdownWrapper>
-          <SearchBar />
-          <Right>
-            <div>Login</div>
-            <NavLinks to="/cart">
-              <AiOutlineShopping />
-              <span>{cartItems.length}</span>
-            </NavLinks>
-          </Right>
-        </Wrapper>
-      </div>
-    </>
+    <Wrapper>
+      <LogoWrapper to="/">
+        <h1>Dream Team Wearables</h1>
+      </LogoWrapper>
+      <DropdownWrapper>
+        <div>Categories</div>
+        <Dropdown>
+          <DropdownContent>
+            <ShopAll to="/shop">All Products</ShopAll>
+            {categories?.map((category) => {
+              return (
+                <CatLink to={`/category/${category}`} key={category}>
+                  {category}
+                </CatLink>
+              );
+            })}
+          </DropdownContent>
+        </Dropdown>
+      </DropdownWrapper>
+      <SearchBar />
+      <Right>
+        <NavLinks to="/cart">
+          <AiOutlineShopping />
+          <span>{cart.length}</span>
+        </NavLinks>
+      </Right>
+    </Wrapper>
   );
 };
 

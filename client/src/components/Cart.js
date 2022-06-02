@@ -1,17 +1,33 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
+// import { useContext, useEffect } from "react";
 import { GlobalContext } from "./GlobalContext";
 import styled from "styled-components";
 import CartItem from "./CartItem";
 
 const Cart = () => {
-  const { cartItems } = useContext(GlobalContext);
+  const { cart } = useContext(GlobalContext);
+  const [items, setItems] = useState([]);
+  useEffect(() => {
+    if (cart)
+      fetch(`/api/get-item-details`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(cart),
+      })
+        .then((res) => res.json())
+        .then((data) => setItems(data.itemDetails));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <Wrapper>
       <Title>Shopping Cart</Title>
       <Border></Border>
-      {cartItems.map((id) => {
-        return <CartItem key={id} id={id} />;
-      })}
+      {items?.map((itm) => (
+        <CartItem item={itm} key={itm._id} />
+      ))}
       <Subtotal>Subtotal(#items): $XX.XX</Subtotal>
     </Wrapper>
   );
