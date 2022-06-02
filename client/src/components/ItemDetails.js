@@ -10,7 +10,7 @@ const ItemDetails = () => {
   const [company, setCompany] = useState();
   const [isLoaded, setIsLoaded] = useState(false);
 
-  const { cartItems, setCartItems } = useContext(GlobalContext);
+  const { addToCart } = useContext(GlobalContext);
 
   useEffect(() => {
     fetch(`/api/get-items/${itemId}`)
@@ -29,14 +29,6 @@ const ItemDetails = () => {
           setIsLoaded(true);
         });
   }, [item]);
-
-  const addToCart = (_id, e) => {
-    e.preventDefault();
-    console.log(_id);
-    if (!cartItems.includes(_id))
-      setCartItems([...cartItems, { _id, quantity: 1 }]);
-  };
-
   return (
     <>
       {isLoaded && (
@@ -54,14 +46,9 @@ const ItemDetails = () => {
                     <OOSButton>Out of stock</OOSButton>
                   ) : (
                     <div>
-                      {cartItems.find((i) => i._id === item.id) ? (
-                        <CartButton disabled>Added to Cart!</CartButton>
-                      ) : (
-                        <CartButton onClick={(e) => addToCart(item._id, e)}>
-                          {item.price} - Add to Cart
-                        </CartButton>
-                      )}
-
+                      <CartButton onClick={() => addToCart(item._id)}>
+                        {item.price} - Add to Cart
+                      </CartButton>
                       <div>{item.numInStock} items in stock</div>
                     </div>
                   )}

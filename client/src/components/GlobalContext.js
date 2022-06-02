@@ -7,7 +7,7 @@ export const GlobalProvider = ({ children }) => {
   const [inventoryData, setInventoryData] = useState();
   const [inStock, setInStock] = useState(true);
   const [login, setLogin] = useState(false);
-  const [cartItems, setCartItems] = useState([]);
+  const [cart, setCart] = useState([]);
 
   // CreditCard.js
   const [cardNum, setCardNum] = useState();
@@ -41,10 +41,39 @@ export const GlobalProvider = ({ children }) => {
       });
   }, []);
 
-  useEffect(() => {
-    console.log(cartItems);
-  }, [cartItems]);
+  const addToCart = (_id) => {
+    if (!cart.find((item) => item._id === _id)) {
+      setCart([...cart, { _id, quantity: 1 }]);
+    } else {
+      setCart(
+        [...cart].map((item) => {
+          if (item._id === _id) {
+            return { ...item, quantity: item.quantity + 1 };
+          } else return item;
+        })
+      );
+    }
+  };
 
+  const removeFromCart = (_id) => {
+    const newCart = cart.map((item) => {
+      if (item._id === _id) {
+        const newItem = { ...item, quantity: item.quantity - 1 };
+        return newItem;
+      } else return item;
+    });
+
+    setCart(
+      newCart.filter((item) => {
+        if (item.quantity < 1) return null;
+        else return item;
+      })
+    );
+  };
+
+  const deleteFromCart = (_id) => {
+    setCart(cart.filter((item) => item._id !== _id));
+  };
   return (
     <GlobalContext.Provider
       value={{
@@ -56,8 +85,8 @@ export const GlobalProvider = ({ children }) => {
         setInStock,
         login,
         setLogin,
-        cartItems,
-        setCartItems,
+        cart,
+        setCart,
         cardNum,
         setCardNum,
         cardName,
@@ -70,6 +99,9 @@ export const GlobalProvider = ({ children }) => {
         setCategories,
         items,
         setItems,
+        addToCart,
+        removeFromCart,
+        deleteFromCart,
         resetCreditCardInfo,
       }}
     >

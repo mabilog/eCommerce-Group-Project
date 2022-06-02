@@ -1,34 +1,16 @@
-import { useEffect, useState } from "react";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
-
 import styled from "styled-components";
+import { GlobalContext } from "./GlobalContext";
 
-const CartItem = ({ id }) => {
-  const [item, setItem] = useState();
-  const [quantity, setQuantity] = useState(1);
+const CartItem = ({ item }) => {
+  const { addToCart, removeFromCart, deleteFromCart, cart } =
+    useContext(GlobalContext);
 
-  useEffect(() => {
-    fetch(`/api/get-items/${id}`)
-      .then((res) => res.json())
-      .then((data) => setItem(data.data));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const optionsLoop = () => {
-    const options = [];
-    for (let i = 1; i <= item.numInStock; i++) {
-      options.push(
-        <option value={i} onClick={(e) => setQuantity(e.target.value)}>
-          {i}
-        </option>
-      );
-    }
-    return options;
-  };
-
+  const itemObj = cart.find((itm) => itm._id === item._id);
   return (
     <>
-      {item ? (
+      {item && itemObj ? (
         <Div key={item._id}>
           <div>
             <Link to={`/items/${item._id}`}>
@@ -38,10 +20,18 @@ const CartItem = ({ id }) => {
           <div>
             <Name>{item.name}</Name>
             <Price>{item.price}</Price>
+            <div>
+              <button onClick={() => removeFromCart(item._id)}>-</button>
+              <span>{itemObj.quantity}</span>
+              <button
+                onClick={() => addToCart(item._id)}
+                disabled={itemObj.quantity === item.numInStock}
+              >
+                +
+              </button>
+            </div>
 
-            <Select>{optionsLoop()}</Select>
-
-            <Delete>Delete</Delete>
+            <Delete onClick={() => deleteFromCart(item._id)}>Delete</Delete>
           </div>
         </Div>
       ) : null}
@@ -72,11 +62,6 @@ const Price = styled.div`
   font-size: 20px;
   font-weight: bold;
   margin-bottom: 15px;
-`;
-const Select = styled.select`
-  width: 60px;
-  height: 20px;
-  margin-right: 10px;
 `;
 
 const Delete = styled.button`
