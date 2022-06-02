@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-
+import { FiTrash2 } from "react-icons/fi";
 import { CartContext } from "./CartContext";
 const CartItem = ({ item }) => {
   const [quantity, setQuantity] = useState(0);
@@ -31,10 +31,12 @@ const CartItem = ({ item }) => {
             <Name>{item.name}</Name>
             <Price>{item.price}</Price>
             <div>
-              <button onClick={() => removeQuantity(item._id)}>-</button>
-              <span>{quantity}</span>
-              <button onClick={() => addQuantity(item._id)}>+</button>
-              <Delete onClick={() => deleteFromCart(item._id)}>Delete</Delete>
+              <Button onClick={() => removeQuantity(item._id)}>-</Button>
+              <span> {quantity} </span>
+              <Button onClick={() => addQuantity(item._id)}>+</Button>
+              <Delete onClick={() => deleteFromCart(item._id)}>
+                <FiTrash2 />
+              </Delete>
             </div>
           </div>
         </Div>
@@ -50,13 +52,13 @@ const Div = styled.div`
   width: 700px;
   height: 150px;
   border: solid 1px rgb(183, 181, 161);
-  border-radius: 7px;
   margin: 10px 15px 0px;
 `;
 
 const Image = styled.img`
   height: 100px;
-  border-radius: 7px;
+  padding-left: 15px;
+  padding-right: 15px;
 `;
 const Name = styled.div`
   font-size: 18px;
@@ -70,12 +72,18 @@ const Price = styled.div`
 
 const Delete = styled.button`
   border: none;
-  background-color: none;
+  background-color: transparent;
   text-decoration-style: none;
   font-size: 12px;
-
+  margin-left: 3px;
   &:hover {
     text-decoration: underline;
   }
 `;
+const Button = styled.button`
+  background-color: var(--primary-color);
+  color: white;
+  border: 0px;
+`;
+
 export default CartItem;
