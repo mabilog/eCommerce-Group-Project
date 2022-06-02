@@ -118,7 +118,7 @@ const createOrder = async (req, res) => {
       const result = await db
         .collection("items")
         .updateOne(
-          { _id: parseInt(item.itemId) },
+          { _id: parseInt(item._id) },
           { $inc: { numInStock: -parseInt(item.quantity) } }
         );
 
@@ -195,6 +195,7 @@ const deleteOrder = async (req, res) => {
 const getItemDetails = async (req, res) => {
   try {
     const cart = req.body;
+    console.log(cart);
     const client = new MongoClient(MONGO_URI, options);
     await client.connect();
 
@@ -204,7 +205,7 @@ const getItemDetails = async (req, res) => {
       cart.map(async (item) => {
         const result = await db
           .collection("items")
-          .findOne({ _id: parseInt(item._id) });
+          .findOne({ _id: parseInt(item) });
         return result;
       })
     );
@@ -214,7 +215,7 @@ const getItemDetails = async (req, res) => {
       itemDetails,
       message: "hello from the other side",
     });
-    // client.close();
+    client.close();
   } catch (error) {
     console.log(error);
   }

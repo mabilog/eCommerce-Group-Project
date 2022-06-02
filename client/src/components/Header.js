@@ -6,13 +6,10 @@ import { NavLink, Link } from "react-router-dom";
 import { AiOutlineShopping } from "react-icons/ai";
 
 const Header = () => {
-  const { cart, categories } = useContext(GlobalContext);
+  const { categories } = useContext(GlobalContext);
 
   let numOfItems = 0;
 
-  cart.forEach((item) => {
-    numOfItems = numOfItems + item.quantity;
-  });
   return (
     <Wrapper>
       <LogoWrapper to="/">
@@ -93,7 +90,6 @@ const DropdownWrapper = styled.div`
 `;
 
 const ShopAll = styled(NavLink)`
-  /* background-color: #f44334; */
   text-decoration: none;
   color: #000;
   z-index: 99;
@@ -112,7 +108,6 @@ const CatLink = styled(Link)`
 const Dropdown = styled.div`
   display: none;
   position: absolute;
-  /* height: 100px; */
 `;
 const DropdownContent = styled.div`
   display: flex;

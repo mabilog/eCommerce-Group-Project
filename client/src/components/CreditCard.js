@@ -1,35 +1,52 @@
 import { useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { GlobalContext } from "./GlobalContext";
+import { ShippingContext } from "./ShippingContext";
 import styled from "styled-components";
+import { CartContext } from "./CartContext";
 
 const CreditCard = () => {
   const {
-    cardNum,
-    setCardNum,
-    cardName,
-    setCardName,
-    cardExp,
-    setCardExp,
-    cardSec,
-    setCardSec,
-    resetCreditCardInfo,
-  } = useContext(GlobalContext);
+    shippingState,
+    actions: {
+      updateFirstName,
+      updateLastName,
+      updateEmail,
+      updateAddress,
+      updateCcHolder,
+      updateCcNum,
+      updateCcExp,
+      updateCcCvv,
+      resetState,
+    },
+  } = useContext(ShippingContext);
+
+  const { state } = useContext(CartContext);
+  const { setOrderConfirmation } = useContext(GlobalContext);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
-    resetCreditCardInfo();
+    resetState();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   const handleOrderSubmit = (e) => {
     e.preventDefault();
-    const postbody = {};
-    // fetch("/api/create-order", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(postbody),
-    // });
-    console.log(postbody);
+    const postbody = { ...shippingState, ...state };
+    fetch("/api/create-order", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(postbody),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setOrderConfirmation(data.orderObj);
+      })
+      .then(() => navigate("/orders"));
   };
   return (
     <Wrapper>
@@ -45,12 +62,44 @@ const CreditCard = () => {
         </TopWrapper>
         <InputWrapper>
           <input
+            type="text"
+            placeholder="First Name"
+            name="first-name"
+            id="input-first-name"
+            required
+            onChange={(e) => updateFirstName(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="Last Name"
+            name="last-name"
+            id="input-last-name"
+            required
+            onChange={(e) => updateLastName(e.target.value)}
+          />
+          <input
+            type="email"
+            placeholder="e-mail"
+            name="email"
+            id="input-email"
+            required
+            onChange={(e) => updateEmail(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="Address"
+            name="address"
+            id="input-address"
+            required
+            onChange={(e) => updateAddress(e.target.value)}
+          />
+          <input
             type="number"
             placeholder="Card Number"
             name="credit-card-number"
             id="input-card-number"
             required
-            onChange={(e) => setCardNum(e.target.value)}
+            onChange={(e) => updateCcNum(e.target.value)}
           />
           <input
             type="text"
@@ -58,7 +107,7 @@ const CreditCard = () => {
             placeholder="Name on Card"
             id="input-card-name"
             required
-            onChange={(e) => setCardName(e.target.value)}
+            onChange={(e) => updateCcHolder(e.target.value)}
           />
           <SecurityWrapper>
             <input
@@ -67,7 +116,7 @@ const CreditCard = () => {
               placeholder="Expiration date"
               id="input-card-number"
               required
-              onChange={(e) => setCardExp(e.target.value)}
+              onChange={(e) => updateCcExp(e.target.value)}
             />
             <input
               type="number"
@@ -75,22 +124,12 @@ const CreditCard = () => {
               id="input-card-sec"
               placeholder="Security Code"
               required
-              onChange={(e) => setCardSec(e.target.value)}
+              onChange={(e) => updateCcCvv(e.target.value)}
             />
           </SecurityWrapper>
         </InputWrapper>
         <ButtonWrapper>
-          <SubmitBtn
-            type="submit"
-            disabled={
-              cardNum === undefined ||
-              cardName === undefined ||
-              cardExp === undefined ||
-              cardSec === undefined
-            }
-          >
-            Check out
-          </SubmitBtn>
+          <SubmitBtn type="submit">Check out</SubmitBtn>
         </ButtonWrapper>
       </FormWrapper>
     </Wrapper>

@@ -1,16 +1,41 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { GlobalContext } from "./GlobalContext";
-
+// import { GlobalContext } from "./GlobalContext";
+import { CartContext } from "./CartContext";
 const CartItem = ({ item }) => {
-  const { addToCart, removeFromCart, deleteFromCart, cart } =
-    useContext(GlobalContext);
+  // const { addToCart, removeFromCart, deleteFromCart, cart } =
+  // useContext(GlobalContext);
 
-  const itemObj = cart.find((itm) => itm._id === item._id);
+  // const itemObj = cart.find((itm) => itm._id === item._id);
+  // console.log(item);
+  const [quantity, setQuantity] = useState(0);
+  const {
+    state,
+    actions: {
+      addToCart,
+      removeFromCart,
+      addQuantity,
+      removeQuantity,
+      deleteFromCart,
+    },
+  } = useContext(CartContext);
+
+  useEffect(() => {
+    console.log(state.cartItems);
+    if (state.cartItems.some((itm) => itm._id === item._id)) {
+      const itemObj = state.cartItems.find((itm) => itm._id === item._id);
+      setQuantity(itemObj.quantity);
+    }
+  }, [state]);
+
+  // const itemObj = state.cartItems.find((itm) => itm._id === item._id);
+  // console.log(itemObj.quantity);
+
   return (
     <>
-      {item && itemObj ? (
+      {/* {item && itemObj ? ( */}
+      {item ? (
         <Div key={item._id}>
           <div>
             <Link to={`/items/${item._id}`}>
@@ -21,11 +46,14 @@ const CartItem = ({ item }) => {
             <Name>{item.name}</Name>
             <Price>{item.price}</Price>
             <div>
-              <button onClick={() => removeFromCart(item._id)}>-</button>
-              <span>{itemObj.quantity}</span>
+              <button onClick={() => removeQuantity(item._id)}>-</button>
+              <span>
+                {quantity}
+                {/* {state.cartItems.filter((itm) => itm._id === item._id).quantity} */}
+              </span>
               <button
-                onClick={() => addToCart(item._id)}
-                disabled={itemObj.quantity === item.numInStock}
+                onClick={() => addQuantity(item._id)}
+                // disabled={itemObj.quantity === item.numInStock}
               >
                 +
               </button>
