@@ -1,4 +1,5 @@
 import { createContext, useReducer, useState } from "react";
+import nil from "uuid/dist/nil";
 
 export const CartContext = createContext(null);
 
@@ -42,19 +43,15 @@ const reducer = (state, action) => {
         ...state,
         cartItems: [
           ...state.cartItems.map((item) => {
-            if (action.data === item._id) {
-              return { ...item, quantity: item.quantity + 1 };
-            } else {
-              return item;
-            }
+            return action.data === item._id
+              ? { ...item, quantity: item.quantity + 1 }
+              : item;
           }),
         ],
         subtotal:
           state.subtotal +
           state.cartItems.find((item) => {
-            if (item._id === action.data) {
-              return item.price;
-            }
+            return item._id === action.data ? item.price : null;
           }).price,
         totalItems: state.totalItems + 1,
       };
@@ -75,9 +72,7 @@ const reducer = (state, action) => {
         subtotal:
           state.subtotal -
           state.cartItems.find((item) => {
-            if (item._id === action.data) {
-              return item.price;
-            }
+            return item._id === action.data ? item.price : null;
           }).price,
         totalItems: state.totalItems - 1,
       };
@@ -92,17 +87,15 @@ const reducer = (state, action) => {
         subtotal:
           state.subtotal -
           state.cartItems.find((item) => {
-            if (item._id === action.data) {
-              return item.price;
-            }
+            return item._id === action.data ? item.price : null;
           }).price *
             state.cartItems.find((item) => {
-              if (item._id === action.data) return item.quantity;
+              return item._id === action.data ? item.quantity : null;
             }).quantity,
         totalItems:
           state.totalItems -
           state.cartItems.find((item) => {
-            if (item._id === action.data) return item.quantity;
+            return item._id === action.data ? item.quantity : null;
           }).quantity,
       };
     }
