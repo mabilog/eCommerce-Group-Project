@@ -1,28 +1,26 @@
 import { useContext, useEffect, useState } from "react";
-// import { useContext, useEffect } from "react";
-import { GlobalContext } from "./GlobalContext";
+import { CartContext } from "./CartContext";
 import styled from "styled-components";
 import CartItem from "./CartItem";
 import CreditCard from "./CreditCard";
 
 const Cart = () => {
-  const { cart } = useContext(GlobalContext);
+  const { state } = useContext(CartContext);
   const [items, setItems] = useState([]);
-  const [subtotal, setSubtotal] = useState(0);
+
   useEffect(() => {
-    if (cart)
+    if (state.idsArray)
       fetch(`/api/get-item-details`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(cart),
+        body: JSON.stringify(state.idsArray),
       })
         .then((res) => res.json())
         .then((data) => setItems(data.itemDetails));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
   return (
     <CartWrapper>
       <Wrapper>
@@ -31,7 +29,7 @@ const Cart = () => {
         {items?.map((itm) => (
           <CartItem item={itm} key={itm._id} />
         ))}
-        <Subtotal>Subtotal(#items): ${subtotal}</Subtotal>
+        <Subtotal>Subtotal(#items): $?</Subtotal>
       </Wrapper>
       <Right>
         <CreditCard />

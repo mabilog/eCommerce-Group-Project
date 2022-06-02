@@ -2,15 +2,17 @@ import styled from "styled-components";
 import { useContext } from "react";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { GlobalContext } from "./GlobalContext";
-
+import { CartContext } from "./CartContext";
 const ItemDetails = () => {
   const { itemId } = useParams();
   const [item, setItem] = useState();
   const [company, setCompany] = useState();
   const [isLoaded, setIsLoaded] = useState(false);
 
-  const { addToCart } = useContext(GlobalContext);
+  const {
+    state,
+    actions: { addToCart },
+  } = useContext(CartContext);
 
   useEffect(() => {
     fetch(`/api/get-items/${itemId}`)
@@ -29,6 +31,7 @@ const ItemDetails = () => {
           setIsLoaded(true);
         });
   }, [item]);
+
   return (
     <>
       {isLoaded && (
@@ -46,7 +49,15 @@ const ItemDetails = () => {
                     <OOSButton>Out of stock</OOSButton>
                   ) : (
                     <div>
-                      <CartButton onClick={() => addToCart(item._id)}>
+                      <CartButton
+                        onClick={() =>
+                          addToCart(
+                            `${item._id}`,
+                            `${Number(item.price.substring(1))}`
+                          )
+                        }
+                        disabled={state.idsArray.includes(item._id)}
+                      >
                         {item.price} - Add to Cart
                       </CartButton>
                     </div>
