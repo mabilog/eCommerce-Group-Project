@@ -49,7 +49,6 @@ const ItemDetails = () => {
                       <CartButton onClick={() => addToCart(item._id)}>
                         {item.price} - Add to Cart
                       </CartButton>
-                      <div>{item.numInStock} items in stock</div>
                     </div>
                   )}
                 </StockWrapper>
