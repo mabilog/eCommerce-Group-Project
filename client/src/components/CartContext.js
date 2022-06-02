@@ -1,5 +1,4 @@
 import { createContext, useReducer, useState } from "react";
-import nil from "uuid/dist/nil";
 
 export const CartContext = createContext(null);
 
